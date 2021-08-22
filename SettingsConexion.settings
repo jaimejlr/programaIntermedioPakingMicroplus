@@ -1,0 +1,12 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="ProgramaIntermedioPackinMicroplus" GeneratedClassName="SettingsConexion">
+  <Profiles />
+  <Settings>
+    <Setting Name="conexionMySql" Type="System.String" Scope="User">
+      <Value Profile="(Default)">server=82.163.176.103;user id=smartbu2_jl;password=gu)1!0i4Sp;database=smartbu2_jl;SSL Mode=None</Value>
+    </Setting>
+    <Setting Name="conexionSybase" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Dsn=db_microplus_32;uid=dba;pwd=AdminSQLplus.-18460</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

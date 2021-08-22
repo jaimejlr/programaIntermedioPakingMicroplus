@@ -1,0 +1,9 @@
+C:\Users\jaime\source\repos\ProgramaIntermedioPackinMicroplus\obj\Debug\ProgramaIntermedioPackinMicroplus.csproj.AssemblyReference.cache
+C:\Users\jaime\source\repos\ProgramaIntermedioPackinMicroplus\obj\Debug\ProgramaIntermedioPackinMicroplus.csproj.CoreCompileInputs.cache
+C:\Users\jaime\source\repos\ProgramaIntermedioPackinMicroplus\bin\Debug\ProgramaIntermedioPackinMicroplus.exe.config
+C:\Users\jaime\source\repos\ProgramaIntermedioPackinMicroplus\bin\Debug\ProgramaIntermedioPackinMicroplus.exe
+C:\Users\jaime\source\repos\ProgramaIntermedioPackinMicroplus\bin\Debug\ProgramaIntermedioPackinMicroplus.pdb
+C:\Users\jaime\source\repos\ProgramaIntermedioPackinMicroplus\bin\Debug\MySql.Data.dll
+C:\Users\jaime\source\repos\ProgramaIntermedioPackinMicroplus\obj\Debug\ProgramaIntermedioPackinMicroplus.csproj.CopyComplete
+C:\Users\jaime\source\repos\ProgramaIntermedioPackinMicroplus\obj\Debug\ProgramaIntermedioPackinMicroplus.exe
+C:\Users\jaime\source\repos\ProgramaIntermedioPackinMicroplus\obj\Debug\ProgramaIntermedioPackinMicroplus.pdb
