@@ -10,7 +10,7 @@ namespace ProgramaIntermedioPackinMicroplus.MySQL_DAL
 {
    public class ClienteMySQL_DAL
     {
-        public ClienteMySqlBL mtdoSeleccionarTodoclientes()
+        public static ClienteMySqlBL mtdoSeleccionarTodoclientes(String codCliente)
         {
             ClienteMySqlBL obj = new ClienteMySqlBL();
             using (MySqlConnection conex = new MySqlConnection(SettingsConexion.Default.conexionMySql))
@@ -57,8 +57,9 @@ namespace ProgramaIntermedioPackinMicroplus.MySQL_DAL
                     " from clientes c " +
                     " left outer join tipo_cliente tc on c.tipo_cliente_id = tc.tipo_cliente_id " +
                     " left outer join tipo_identificacion ti on c.tipo_identificacion_id = ti.tipo_identificacion_id " +
-                    " where COD_CLIENT = '000401' ";
+                    " where COD_CLIENT = @COD_CLIENT ";
                     cmd = new MySqlCommand(sql, conex);
+                    cmd.Parameters.Add("@COD_CLIENT", MySqlDbType.VarChar, 10).Value = codCliente;
                     MySqlDataReader dr = null;
                     conex.Open();
                     dr = cmd.ExecuteReader();

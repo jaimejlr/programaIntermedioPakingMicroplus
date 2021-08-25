@@ -48,7 +48,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MySQL_DAL\ClienteMySQL_DAL.cs" />
+    <Compile Include="MySQL_DAL\FacturaMySQL_DAL.cs" />
     <Compile Include="MySQL_Negocio\ClienteMySqlBL.cs" />
+    <Compile Include="MySQL_Negocio\FacturasMySqlBL.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SeleccionarDatosMysqlDAL.cs" />
@@ -59,6 +61,9 @@
       <DependentUpon>SettingsConexion.settings</DependentUpon>
     </Compile>
     <Compile Include="SyBase_DAL\ClienteSyBase_DAL.cs" />
+    <Compile Include="SyBase_DAL\insertarFacturaSybase_DAL.cs" />
+    <Compile Include="SyBase_DAL\NumeroFacturaSiguienteDAL.cs" />
+    <Compile Include="SyBase_Negocio\EncabezadoFactura_SB_BL.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -67,8 +72,6 @@
       <LastGenOutput>SettingsConexion.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="SyBase_Negocio\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

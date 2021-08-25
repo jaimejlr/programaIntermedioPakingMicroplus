@@ -36,6 +36,43 @@ namespace ProgramaIntermedioPackinMicroplus
             return resultado;
         }
 
+
+        public string mtdoSeleccionarMaximaFacturaMYSQL()
+        {
+            string resultado = "";
+            using (OdbcConnection connection = new OdbcConnection(SettingsConexion.Default.conexionSybase))
+                try
+                {
+                    connection.Open();
+
+                    // SLECCIONAR EMPRESA
+
+                    String SQL_query_empresa = "SELECT cast(isnull(max(s.lm_factura_mysql),0) as int) maxFacturaMySQL FROM log_migracion_mysql_sybase s ";
+                    OdbcCommand cmdCodEmpresa = new OdbcCommand(SQL_query_empresa, connection);
+                    resultado = cmdCodEmpresa.ExecuteScalar().ToString();                    
+                    connection.Dispose();
+
+                }
+                catch (OdbcException ex)
+                {
+                    connection.Close();
+                    connection.Dispose();
+                    throw new Exception(ex.Message);
+                }
+                catch (Exception ex)
+                {
+                    connection.Close();
+                    connection.Dispose();
+                    throw new Exception(ex.Message);
+                }
+                finally
+                {
+                    connection.Close();
+                    connection.Dispose();
+                }
+            return resultado;
+        }
+
         public string insertarEncabezadoFacturaSyBase()
         {
             string resultado = "";
