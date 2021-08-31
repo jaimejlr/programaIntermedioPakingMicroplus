@@ -131,5 +131,57 @@ namespace ProgramaIntermedioPackinMicroplus.MySQL_DAL
             return listaDatos;
         }
 
+
+        public List<FacturaDetalleMySQLBL> mtdoSeleccionarDetallefacturas(string numFactura)
+        {
+            List<FacturaDetalleMySQLBL> listaDatos = new List<FacturaDetalleMySQLBL>();
+            using (MySqlConnection conex = new MySqlConnection(SettingsConexion.Default.conexionMySql))
+            {
+                try
+                {
+                    MySqlCommand cmd = null;
+                    string sql = " Select f.invoice, b.tipo_caja, b.caja, fl.variedad, b.num_tallos as tallos_bunche,  " +
+                                 "(b.NUM_TALLOS) as tallos, count(b.NUM_BUNCH) As bunches2, b.precio, (b.num_tallos*b.PRECIO) as valor " +
+                                 "From bunche b " +
+                                 "inner join flores fl on fl.codigo=mid(b.cod_varie,1,3) " +
+                                 "Left join facturas f on f.num_pack=b.num_pack " +
+                                 "Where f.invoice = @INVOICE " +
+                                 "Group by b.caja,b.tipo_caja, b.cod_varie,b.num_tallos,b.precio ";
+                    cmd = new MySqlCommand(sql, conex);
+                    cmd.Parameters.Add("@INVOICE", MySqlDbType.VarChar).Value = numFactura;
+                    MySqlDataReader dr = null;
+                    conex.Open();
+                    dr = cmd.ExecuteReader();
+                    while (dr.Read())
+                    {
+                        FacturaDetalleMySQLBL obj = new FacturaDetalleMySQLBL();
+                        obj.invoice = dr["invoice"].ToString();
+                        obj.tipo_caja = dr["tipo_caja"].ToString();
+                        obj.caja = dr["caja"].ToString().Replace(",", ".");
+                        obj.variedad = dr["variedad"].ToString();
+                        obj.tallos_bunche = dr["tallos_bunche"].ToString();
+                        obj.tallos = dr["tallos"].ToString().Replace(",", ".");
+                        obj.bunches2 = dr["bunches2"].ToString().Replace(",", ".");
+                        obj.precio = dr["precio"].ToString();
+                        obj.valor = dr["valor"].ToString().Replace(",", ".");
+
+                        listaDatos.Add(obj);
+                    }
+                    conex.Close();
+                }
+                catch (Exception ex)
+                {
+                    conex.Close();
+                    conex.Dispose();
+                    throw ex;
+                }
+                finally
+                {
+                    conex.Close();
+                    conex.Dispose();
+                }
+            }
+            return listaDatos;
+        }
     }
 }
