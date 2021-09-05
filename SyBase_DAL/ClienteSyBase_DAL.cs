@@ -43,6 +43,8 @@ namespace ProgramaIntermedioPackinMicroplus.SyBase_DAL
 
                             // seleccionar código del cliente
 
+                        //**** CODCLA = Código del cliente padre.
+
                             String SQL_query_codCliente = "select cast( cast( max(codcli) +1 as float ) as int ) codigoCliente FROM clientes ";
                             OdbcCommand cmdCodCliente = new OdbcCommand(SQL_query_codCliente, connection);
                             codCliente = cmdCodCliente.ExecuteScalar().ToString();

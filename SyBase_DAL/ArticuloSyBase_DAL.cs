@@ -35,7 +35,7 @@ namespace ProgramaIntermedioPackinMicroplus.SyBase_DAL
                     dr = cmdVerificararticulo.ExecuteReader();
                     while (dr.Read())
                     {
-                        codArticulo = dr["codcli"].ToString();
+                        codArticulo = dr["codart"].ToString();
                     }
 
                     if (codArticulo == "")

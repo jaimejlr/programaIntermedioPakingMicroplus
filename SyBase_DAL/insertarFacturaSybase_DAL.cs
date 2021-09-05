@@ -57,12 +57,33 @@ namespace ProgramaIntermedioPackinMicroplus.SyBase_DAL
             using (OdbcConnection connection = new OdbcConnection(SettingsConexion.Default.conexionSybase))
                 try
                 {
+                    //String SQL_query = "INSERT INTO renglonesfacturas " +
+                    //     "(codemp            , numfac         ,numren          ,numite     ,codart          ,nomart          , coduni         , cantid       ,  preuni      ,  totren       , codiva        , codmon         ,    totext    ,codmed           , cajas)   " +
+                    //     " VALUES " +  
+                    //     " ('"+obj.codemp+"','"+obj.numfac+"',"+obj.numren+","+obj.numite+",'"+obj.codart+"','"+obj.nomart+"','"+obj.coduni+"',"+obj.cantid+","+obj.preuni+","+obj.totren+",'"+obj.codiva+"','"+obj.codmon+"',"+obj.totext+",'"+obj.codmed+"',"+obj.cajas+")";
+
                     String SQL_query = "INSERT INTO renglonesfacturas " +
-                         "(codemp  , numfac  ,                                   numren          ,numite     ,codart                 ,nomart                , coduni               , cantid           ,  preuni           ,  totren           , codiva              , codmon              ,    totext        ,codmed                 , cajas)   " +
-                         " VALUES " +  
-                         " ('"+obj.codemp+"','"+obj.numfac+"',"+obj.numren+","+obj.numite+",'"+obj.codart+"','"+obj.nomart+"','"+obj.coduni+"',"+obj.cantid+","+obj.preuni+","+obj.totren+",'"+obj.codiva+"','"+obj.codmon+"',"+obj.totext+",'"+obj.codmed+"',"+obj.cajas+")";
+                        "(codemp  , numfac ,numren , numite ,codart, nomart , coduni, cantid, preuni, totren , codiva , codmon , totext  , codmed , cajas )   " +
+                        " VALUES " +
+                        " (?      ,      ?,      ?,       ?,      ?,      ? ,     ?,   ?     ,     ?,     ?   , ?     , ?      ,  ?       ,  ?    , ?)";
+
                     connection.Open();
                     OdbcCommand cmd = new OdbcCommand(SQL_query, connection);
+                    cmd.Parameters.Add("codemp", OdbcType.NVarChar).Value = obj.codemp;
+                    cmd.Parameters.Add("numfac", OdbcType.NVarChar).Value = obj.numfac;
+                    cmd.Parameters.Add("numren", OdbcType.NVarChar).Value = obj.numren;
+                    cmd.Parameters.Add("numite", OdbcType.Int).Value = obj.numite;
+                    cmd.Parameters.Add("codart", OdbcType.NVarChar).Value = obj.codart;
+                    cmd.Parameters.Add("nomart", OdbcType.NVarChar).Value = obj.nomart;
+                    cmd.Parameters.Add("coduni", OdbcType.NVarChar).Value = obj.coduni;
+                    cmd.Parameters.Add("cantid", OdbcType.Decimal).Value = obj.cantid;
+                    cmd.Parameters.Add("preuni", OdbcType.Decimal).Value = obj.preuni;
+                    cmd.Parameters.Add("totren", OdbcType.Decimal).Value = obj.totren;
+                    cmd.Parameters.Add("codiva", OdbcType.NVarChar).Value = obj.codiva;
+                    cmd.Parameters.Add("codmon", OdbcType.NVarChar).Value = obj.codmon;
+                    cmd.Parameters.Add("totext", OdbcType.Decimal).Value = obj.totext;
+                    cmd.Parameters.Add("codmed", OdbcType.NVarChar).Value = obj.codmed;
+                    cmd.Parameters.Add("cajas", OdbcType.Decimal).Value = obj.cajas;
                     resultado = cmd.ExecuteNonQuery().ToString();
                     connection.Close();
                     connection.Dispose();

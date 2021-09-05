@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="funcionesEspeciales.cs" />
     <Compile Include="MySQL_DAL\ClienteMySQL_DAL.cs" />
     <Compile Include="MySQL_DAL\DaeDAL.cs" />
     <Compile Include="MySQL_DAL\FacturaMySQL_DAL.cs" />
@@ -67,15 +68,19 @@
     </Compile>
     <Compile Include="SyBase_DAL\ArticuloSyBase_DAL.cs" />
     <Compile Include="SyBase_DAL\ClienteSyBase_DAL.cs" />
+    <Compile Include="SyBase_DAL\CuentasPorCobrarSyBase_DAL.cs" />
     <Compile Include="SyBase_DAL\DatosVehiculosSyBase_DAL.cs" />
     <Compile Include="SyBase_DAL\insertarFacturaSybase_DAL.cs" />
+    <Compile Include="SyBase_DAL\karde_SyBase_DAL.cs" />
     <Compile Include="SyBase_DAL\NumeroFacturaSiguienteDAL.cs" />
     <Compile Include="SyBase_DAL\transportistaSyBase_DAL.cs" />
     <Compile Include="SyBase_DAL\VendedorSyBase_DAL.cs" />
     <Compile Include="SyBase_Negocio\ArticuloSyBase_BL.cs" />
+    <Compile Include="SyBase_Negocio\CuentasPorCobrar_SyBase_BL.cs" />
     <Compile Include="SyBase_Negocio\DatosVehiculosSyBase_BL.cs" />
     <Compile Include="SyBase_Negocio\DetalleFacturaSyBaseBL.cs" />
     <Compile Include="SyBase_Negocio\EncabezadoFactura_SB_BL.cs" />
+    <Compile Include="SyBase_Negocio\Karde_SyBase_BL.cs" />
     <Compile Include="SyBase_Negocio\transportistaSyBase_BL.cs" />
     <Compile Include="SyBase_Negocio\VendedorSybase_BL.cs" />
   </ItemGroup>
