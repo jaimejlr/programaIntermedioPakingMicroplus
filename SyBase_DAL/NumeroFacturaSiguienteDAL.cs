@@ -101,10 +101,10 @@ namespace ProgramaIntermedioPackinMicroplus.SyBase_DAL
                     resul = cmdCodEmpresa.ExecuteScalar().ToString();
                     resultado = resul.PadLeft(8, '0');
 
-                    // actualizar el secuencial de CXC
-                    //String SQL_query_updateSecuencia = "UPDATE secuencias SET seccue = '"+ resultado + "'  where codsec= 'VC_CXC' ";
-                    //OdbcCommand cmdUpdateSecuencia = new OdbcCommand(SQL_query_updateSecuencia, connection);
-                    //cmdUpdateSecuencia.ExecuteNonQuery();
+                   // actualizar el secuencial de CXC
+                   String SQL_query_updateSecuencia = "UPDATE secuencias SET seccue = '" + resultado + "'  where codsec= 'VC_CXC' ";
+                    OdbcCommand cmdUpdateSecuencia = new OdbcCommand(SQL_query_updateSecuencia, connection);
+                    cmdUpdateSecuencia.ExecuteNonQuery();
 
                     connection.Close();
                     connection.Dispose();
