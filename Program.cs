@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
+using ProgramaIntermedioPackinMicroplus.MySQL;
 using ProgramaIntermedioPackinMicroplus.MySQL_DAL;
 using ProgramaIntermedioPackinMicroplus.MySQL_Negocio;
 using ProgramaIntermedioPackinMicroplus.SyBase_DAL;
@@ -16,14 +17,16 @@ namespace ProgramaIntermedioPackinMicroplus
     {
         static void Main(string[] args)
         {
+
+            Console.WriteLine("inicio");
+
             FacturaMySQL_DAL dalFacturasMySQL = new FacturaMySQL_DAL();
 
           
             // crear tabla para guadar las facturas que se realizó la migración de mysql a sybase
 
             // seleccionar el máximo id de factura del sistema guardado en la tabla log
-            SeleccionarDatosSybaseDAL dalSyBase = new SeleccionarDatosSybaseDAL();
-            String maximoFactura = dalSyBase.mtdoSeleccionarMaximaFacturaMYSQL();
+            String maximoFactura = SeleccionarDatosSybaseDAL.mtdoSeleccionarMaximaFacturaMYSQL();
             // consultar las facturas mayores al máximo id guardado en la tabla log
 
             //insertar el detalle de la factura.
@@ -42,12 +45,15 @@ namespace ProgramaIntermedioPackinMicroplus
                 // varchar(5) en packin dae es mas de 10    055-2021-40-12345678  EEUU-31-AGO-21
                 obj.codven = VendedorSyBase_DAL.insertarVendedoresSyBase(vendedor);
                 obj.codalm = "01"; // bodega estática
-                // CREAR COMO CLIENTE AL CLIENTE PADRE
 
-                // CREAR COMO CLASE AL CLIENTE PADRE, PERO EL CÓDIGO DE CLASE TIENE QUE SER LOS 5 PRIMEROS CARACTERES DEL NOMBRE
-               // obj.codcla = // CÓDIGO DE CLASE GENERADO.
                 // cliente hijo
-                obj.codcli = ClienteSyBase_DAL.insertarClienteSyBase(ClienteMySQL_DAL.mtdoSeleccionarTodoclientes(item.cod_client));
+                ClienteMySqlBL clientehijo = new ClienteMySqlBL();
+                clientehijo = ClienteMySQL_DAL.mtdoSeleccionarTodoclientes(item.cod_client);
+                var codClaseCliente = ClienteSyBase_DAL.insertarClaseClienteSyBase(clientehijo);
+                obj.codcli = ClienteSyBase_DAL.insertarClienteSyBase(clientehijo, codClaseCliente);
+                // CREAR COMO CLIENTE AL CLIENTE PADRE
+                // CREAR COMO CLASE AL CLIENTE PADRE, PERO EL CÓDIGO DE CLASE TIENE QUE SER LOS 5 PRIMEROS CARACTERES DEL NOMBRE
+                //obj.codcla = ClienteSyBase_DAL.insertarClienteSyBase(ClienteMySQL_DAL.mtdoSeleccionarTodoclientes(clientehijo.CCONSIGNA));// CÓDIGO DE CLASE GENERADO.
                 obj.fecfac = item.Fecha_facturacion;
                 obj.lispre = "1";
                 obj.observ = "INVOICE No. " + item.INVOICE + " - PACKING No. " + item.NUM_PACK;
@@ -217,24 +223,25 @@ namespace ProgramaIntermedioPackinMicroplus
 
                 CuentasPorCobrarSyBase_DAL.insertarCuentasPorCobrarSyBase(objCxc);
 
+                SeleccionarDatosSybaseDAL.insertarLogMigracionFactura(obj.numfac, item.INVOICE, "FINALIZADO", "");
             }
 
 
+            Console.ReadKey();
 
-             
 
-           
+
 
             // insertar las facturas en sybase
 
 
 
 
-            Console.WriteLine("inicio");
+            //  Console.WriteLine("inicio");
 
-         
 
-            
+
+
             //if(dal.ProvarConexion())
             //{
             //    Console.WriteLine("CONEXION MYSQL CORRECTO");
@@ -258,7 +265,7 @@ namespace ProgramaIntermedioPackinMicroplus
             //string resultado = dalSyBase.insertarEncabezadoFacturaSyBase();
             //Console.WriteLine("Facturas insertadas: "+ resultado);
 
-            Console.ReadKey();
+            // 
         }
 
 

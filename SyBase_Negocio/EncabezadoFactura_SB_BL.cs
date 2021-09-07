@@ -11,6 +11,8 @@ namespace ProgramaIntermedioPackinMicroplus.SyBase_Negocio
         public string codemp { get; set; } // CODIGO EMPRESA
         public string numfac { get; set; } // NUMERO FACTURA
         public string codven { get; set; } // CODIGO DAE
+        public string codcla { get; set; } // CODIGO DAE
+
         public string codalm { get; set; } // CODIGO ALMACEN
         public string codcli { get; set; } // CODIGO CLIENTE
         public string fecfac { get; set; } // FECHA FACTURA
