@@ -19,6 +19,7 @@ namespace ProgramaIntermedioPackinMicroplus.SyBase_Negocio
         public string fectra { get; set; }
         public string concep { get; set; }
         public decimal valcob { get; set; }
+        public decimal valcot { get; set; }
         public string tiporg { get; set; }
         public string numorg { get; set; }
         public string codapu { get; set; }
@@ -27,5 +28,8 @@ namespace ProgramaIntermedioPackinMicroplus.SyBase_Negocio
         public string codusu { get; set; }
         public string fecult { get; set; }
         public string referen { get; set; }
+        public string fecfac { get; set; }
+
+        
     }
 }

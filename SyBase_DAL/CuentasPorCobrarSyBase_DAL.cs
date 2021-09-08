@@ -41,9 +41,9 @@ namespace ProgramaIntermedioPackinMicroplus.SyBase_DAL
                         //                    " ( '" + codEmpresa + "', '" + obj.numcpc + ", '" + obj.tipdoc + "'    ,'" + obj.numtra + "'  ,'" + obj.codcli + "'   ,'" + obj.codven + "' ,'" + obj.fecemi + "', '" + obj.fecven + "', '" + obj.fectra + "', '" + obj.concep + "', " + obj.valcob + ", '" + obj.tiporg + "','" + obj.numorg + "','" + obj.codapu + "','" + obj.codap1 + "' ,'" + obj.codmon + "','" + obj.codusu + "','" + obj.codusu + "','" + obj.referen + "' ) ";
 
                     String SQL_query = "INSERT INTO cuentasporcobrar " +
-                                           " ( codemp, numcpc, tipdoc ,numtra ,codcli ,codven  , fecemi ,fecven      ,  fectra    , concep, valcob ,tiporg  , numorg, codapu ,codap1 ,codmon ,codusu ,fecult, referen) " +
+                                           " ( codemp, numcpc, tipdoc ,numtra ,codcli ,codven  , fecemi ,fecven                    ,  fectra    , concep, valcob ,tiporg  , numorg, codapu ,codap1 ,codmon ,codusu ,fecult   ,   referen  , valcot , totnet  , totiva , ncuota , serie    , cerrado ,  fecfac , canmul , establ , porinter , totalinter , codforpag , hora                                 , cajapccob ) " +
                                            " VALUES " +
-                                           " ( ?     , ?     , ?      ,?       ,?     ,?       ,      ?,  getdate() ,   getdate(),       ?,      ?,     ?,         ?,      ?,    ? ,       ?,     ?,      ?,       ? ) ";
+                                           " ( ?     , ?     , ?      ,?       ,?     ,?       ,      ?,  dateadd(mm, 1,getdate() ) ,      ?    ,       ?,      ?,     ?  ,      ?,      ?,     ? ,       ?,   ?   , getdate(),          ? ,   ?    ,     0  ,    0   ,   1     , '001002' , 'N'    ,    ?    , 'N'   ,  '001'  ,  0       ,   0        ,  '20'     ,  CONVERT( CHAR( 20 ), getdate(), 8 ) , '001' ) ";
 
                     OdbcCommand cmd = new OdbcCommand(SQL_query, connection);
                     cmd.Parameters.Add("codemp", OdbcType.VarChar).Value = codEmpresa;
@@ -53,6 +53,7 @@ namespace ProgramaIntermedioPackinMicroplus.SyBase_DAL
                     cmd.Parameters.Add("codcli", OdbcType.VarChar).Value = obj.codcli;
                     cmd.Parameters.Add("codven", OdbcType.VarChar).Value = obj.codven;
                     cmd.Parameters.Add("fecemi", OdbcType.DateTime).Value = obj.fecemi;
+                    cmd.Parameters.Add("fectra", OdbcType.DateTime).Value = obj.fectra;
                     cmd.Parameters.Add("concep", OdbcType.VarChar).Value = obj.concep;
                     cmd.Parameters.Add("valcob", OdbcType.Decimal).Value = obj.valcob;
                     cmd.Parameters.Add("tiporg", OdbcType.VarChar).Value = obj.tiporg;
@@ -61,8 +62,10 @@ namespace ProgramaIntermedioPackinMicroplus.SyBase_DAL
                     cmd.Parameters.Add("codap1", OdbcType.VarChar).Value = obj.codap1;
                     cmd.Parameters.Add("codmon", OdbcType.VarChar).Value = obj.codmon;
                     cmd.Parameters.Add("codusu", OdbcType.VarChar).Value = obj.codusu;
-                    cmd.Parameters.Add("fecult", OdbcType.DateTime).Value = obj.fecult;
+                   // cmd.Parameters.Add("fecult", OdbcType.DateTime).Value = obj.fecult;
                     cmd.Parameters.Add("referen", OdbcType.VarChar).Value = obj.referen;
+                    cmd.Parameters.Add("valcot", OdbcType.Decimal).Value = obj.valcot;
+                    cmd.Parameters.Add("fecfac", OdbcType.DateTime).Value = obj.fecfac;
 
                     resultado = cmd.ExecuteNonQuery().ToString();
                     

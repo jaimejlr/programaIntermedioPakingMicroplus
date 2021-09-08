@@ -123,9 +123,9 @@ namespace ProgramaIntermedioPackinMicroplus.SyBase_DAL
                             codCliente = codCliente.PadLeft(5, '0');
 
                             String SQL_query = "INSERT INTO clientes " +
-                                                " ( codemp              , codcli            , codcla                               ,apliva   ,nomcli               ,    rucced                   ,dircli                 ,      telcli             ,        contac          , ciucli                , mail                ,codcre ) " +
+                                                " ( codemp              , codcli            , codcla            ,apliva   ,nomcli               ,    rucced                   ,dircli                 ,      telcli             ,        contac          , ciucli                , mail                ,codcre                    , codcta , lispre ,  codusu       ,  dircli2                   , repcli                 , descu , cupo  , salact , tiprucced , forpag , estado,  especial, docrec02,  datcon01 , ivapres, parterel) " +
                                                 " VALUES " +
-                                                " ( '"+ codEmpresa + "', '"+ codCliente + "', '"+ codClase + "', '3'     ,'"+ obj.CNOMBRE+ "'  ,'" + obj.identificacion + "' ,'" + obj.DIRECCION + "' ,'" + obj.CTELEFONO1 + "' ,'" + obj.CCONTACTO + "' ,'" + obj.CLOCALIZA + "','" + obj.E_MAIL + "' ,'" + obj.COD_CLIENT + "'  ) ";
+                                                " ( '"+ codEmpresa + "', '"+ codCliente + "', '"+ codClase + "', '3'     ,'"+ obj.CNOMBRE+ "'  ,'" + obj.identificacion + "' ,'" + obj.DIRECCION + "' ,'" + obj.CTELEFONO1 + "' ,'" + obj.CCONTACTO + "' ,  'N'                  ,'" + obj.E_MAIL + "' ,'" + obj.COD_CLIENT + "'   , ''     , '1'  ,   'IMPORTACION' ,  '" + obj.CLOCALIZA + "'  , '" + obj.CCONSIGNA + "' ,  0    , 0     ,0      , 'P'       , 'A'     , 'S'   ,  'R'     , '01'   ,    0       , 'N'   , 'N0' ) ";
                             OdbcCommand cmd = new OdbcCommand(SQL_query, connection);
                             resultado = cmd.ExecuteNonQuery().ToString();
                     }

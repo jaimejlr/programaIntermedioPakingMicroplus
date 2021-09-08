@@ -54,14 +54,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="ProgramaIntermedioPackinMicroplus.exe" size="100832">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="ProgramaIntermedioPackinMicroplus.exe" size="106976">
       <assemblyIdentity name="ProgramaIntermedioPackinMicroplus" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>CwWBlMf/PsUKQO7JVl+zMXAVsFDrLyt3OyLa9pxqsBM=</dsig:DigestValue>
+        <dsig:DigestValue>DjeJ+D53GRboI6C+IeJYeWSEAbHaGkzyzU/5SLEcmQE=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

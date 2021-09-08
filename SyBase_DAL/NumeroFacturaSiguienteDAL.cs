@@ -21,8 +21,7 @@ namespace ProgramaIntermedioPackinMicroplus.SyBase_DAL
                     string resul = "";
                     String SQL_query_empresa = "SELECT cast(cast (max(cast(SUBSTRING(numfac,2) as float)) +1 as float) as int) FROM encabezadofacturas  ";
                     OdbcCommand cmdCodEmpresa = new OdbcCommand(SQL_query_empresa, connection);
-                    resul = cmdCodEmpresa.ExecuteScalar().ToString();
-                    resultado = "F"+ resul.PadLeft(8, '0');
+                    resultado = cmdCodEmpresa.ExecuteScalar().ToString();
                     connection.Close();
                     connection.Dispose();
 

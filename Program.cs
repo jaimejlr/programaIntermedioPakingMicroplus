@@ -17,6 +17,7 @@ namespace ProgramaIntermedioPackinMicroplus
     {
         static void Main(string[] args)
         {
+            String numeroFacturaSybase = "";
 
             Console.WriteLine("inicio");
 
@@ -25,7 +26,7 @@ namespace ProgramaIntermedioPackinMicroplus
 
             // crear tabla para guadar las facturas que se realizó la migración de mysql a sybase
 
-            Console.WriteLine("Seleccionando el numero máximo de factura");
+            Console.WriteLine("***Seleccionando el numero máximo de factura***");
             // seleccionar el máximo id de factura del sistema guardado en la tabla log
             String maximoFactura = SeleccionarDatosSybaseDAL.mtdoSeleccionarMaximaFacturaMYSQL();
             // consultar las facturas mayores al máximo id guardado en la tabla log
@@ -36,10 +37,14 @@ namespace ProgramaIntermedioPackinMicroplus
             List<FacturasMySqlBL> listaFacturasMySQL = dalFacturasMySQL.mtdoSeleccionarTodofacturas(Convert.ToInt32(maximoFactura));
             foreach (var item in listaFacturasMySQL)
             {
+                Console.WriteLine(" ");
+                Console.WriteLine(" ......**********......");
+                Console.WriteLine(" ");
                 EncabezadoFactura_SB_BL obj = new EncabezadoFactura_SB_BL();
                 obj.codemp = NumeroFacturaSiguienteDAL.seleccionarCodigoEmpresa();
-               
-                obj.numfac = NumeroFacturaSiguienteDAL.seleccionarSiguienteFactura();
+
+                numeroFacturaSybase = NumeroFacturaSiguienteDAL.seleccionarSiguienteFactura();
+                obj.numfac = "F" + numeroFacturaSybase.PadLeft(8, '0');
                 Console.WriteLine("Seleccionar numero siguiente de facutura: "+ obj.numfac);
                 // con los datos del dae insertar el vendedor y el id se debe insertar en codven  *********
                 var datosDae= DaeDAL.mtdoSeleccionarTodofue(item.FUE);
@@ -57,6 +62,11 @@ namespace ProgramaIntermedioPackinMicroplus
                 clientehijo = ClienteMySQL_DAL.mtdoSeleccionarTodoclientes(item.cod_client);
                 var codClaseCliente = ClienteSyBase_DAL.insertarClaseClienteSyBase(clientehijo);
                 obj.codcli = ClienteSyBase_DAL.insertarClienteSyBase(clientehijo, codClaseCliente);
+                obj.rucced = clientehijo.identificacion;
+                obj.idcliente = clientehijo.identificacion;
+                obj.idcliguia = clientehijo.identificacion;
+                obj.nomcliguia = clientehijo.CNOMBRE;
+                obj.dircli = clientehijo.DIRECCION;
                 // CREAR COMO CLIENTE AL CLIENTE PADRE
                 // CREAR COMO CLASE AL CLIENTE PADRE, PERO EL CÓDIGO DE CLASE TIENE QUE SER LOS 5 PRIMEROS CARACTERES DEL NOMBRE
                 //obj.codcla = ClienteSyBase_DAL.insertarClienteSyBase(ClienteMySQL_DAL.mtdoSeleccionarTodoclientes(clientehijo.CCONSIGNA));// CÓDIGO DE CLASE GENERADO.
@@ -64,9 +74,12 @@ namespace ProgramaIntermedioPackinMicroplus
                 obj.lispre = "1";
                 obj.observ = "INVOICE No. " + item.INVOICE + " - PACKING No. " + item.NUM_PACK;
                 obj.poriva = (Convert.ToDouble(item.extra == "" ? "0" : item.extra) > 0 ? 1 : 0); // si en extra >0 cambia a 1 ****
-                obj.totnet = Convert.ToDouble(item.USD); 
-                obj.totdes = Convert.ToDouble(item.descuento =="" ? "0": item.descuento);
-                obj.totbas = Convert.ToDouble(item.USD);
+                obj.totnet = Convert.ToDecimal(item.USD.ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("fr-FR"));
+                obj.excen = Convert.ToDecimal(item.USD.ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("fr-FR"));
+                obj.inv_b = Convert.ToDecimal(item.USD.ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("fr-FR"));
+                obj.totdes = Convert.ToDecimal((item.descuento =="" ? "0": item.descuento).ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("fr-FR"));
+                obj.totbas = 0; //Convert.ToDouble(item.USD);
+                obj.abofac = "X";
                 obj.conpag = "C";
                 obj.tipefe = "X";
                 obj.nomcli = item.cliente;
@@ -87,8 +100,10 @@ namespace ProgramaIntermedioPackinMicroplus
                 obj.codtrans = transportistaSyBase_DAL.insertarTransportistaSyBase(transportista);
                 obj.claveaccesofegui = item.guia_aerea;
                 // obj.autorizacion = // guía hija
-                obj.totfac = item.USD;
+                
+                obj.totfac = Convert.ToDecimal(item.USD.ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("fr-FR"));
                 obj.desinv = "S"; // desceunta en inventario
+                obj.codapu = "FF0C" + obj.numfac.Substring(1, 7);
 
                 Console.WriteLine("Insertar encabezado factura");
                 insertarFacturaSybase_DAL.insertarEncabezadoFacturaSyBase(obj);
@@ -99,6 +114,8 @@ namespace ProgramaIntermedioPackinMicroplus
                 int contadorReglon = 1;
                 foreach (var detalle in listaDetalleFacturasMySQL)
                 {
+                    Console.WriteLine(" ");
+                    Console.WriteLine("..........Reglones facura de la factura: "+ obj.numfac);
                     DetalleFacturaSyBaseBL objDet = new DetalleFacturaSyBaseBL();
                     //System.IFormatProvider cultureUS =  new System.Globalization.CultureInfo("en-US");
 
@@ -130,11 +147,18 @@ namespace ProgramaIntermedioPackinMicroplus
                     objDet.codmon = "01";
                     objDet.totext = Convert.ToDecimal(detalle.valor.ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("fr-FR"));  // valor total
                     objDet.codmed = detalle.tipo_caja;
-                    objDet.cajas = Convert.ToDecimal(detalle.caja.ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("fr-FR")); 
+                    objDet.cajas = 1;// Convert.ToDecimal(detalle.caja.ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("fr-FR"));
+                    objDet.desren = 0;
+                    objDet.valcot = 1;
+                    objDet.fecfac = funcionesEspeciales.convertirFecha(obj.fecfac);
+                    objDet.excen = objDet.cantid * objDet.preuni;
+                    objDet.valcargo = objDet.cantid;
+                    objDet.codcli = obj.codcli;
+                    objDet.codven = obj.codven;
 
                     insertarFacturaSybase_DAL.insertarDetalleFacturaSyBase(objDet);
-
-
+                    Console.WriteLine(" ");
+                    Console.WriteLine("..........Kardex de entrada");
                     // insertar en kardex
                     Karde_SyBase_BL objKardex = new Karde_SyBase_BL();
                     objKardex.tiporg = "BOD";
@@ -150,7 +174,7 @@ namespace ProgramaIntermedioPackinMicroplus
                     objKardex.cantot = objDet.cantid.ToString();
                     objKardex.cosuni = objDet.preuni.ToString();
                     objKardex.costot = (objDet.cantid * objDet.preuni).ToString();
-                    objKardex.totven = "0";
+                    objKardex.totven = objKardex.costot;
                     objKardex.codcli = obj.codcli;
                     objKardex.codven = obj.codven;
                     objKardex.codusu = "TEAMPLUS";
@@ -170,6 +194,8 @@ namespace ProgramaIntermedioPackinMicroplus
 
                     karde_SyBase_DAL.insertarKardex(objKardex);
 
+
+                    Console.WriteLine("..........Kardex de salida");
                     Karde_SyBase_BL objKardexSalida = new Karde_SyBase_BL();
                     objKardex.tiporg = "FAC";
                     objKardex.numdoc = obj.numfac;
@@ -181,10 +207,10 @@ namespace ProgramaIntermedioPackinMicroplus
                     objKardex.cantot = objDet.cantid.ToString();
                     objKardex.cosuni = objDet.preuni.ToString();
                     objKardex.costot = (objDet.cantid * objDet.preuni).ToString();
-                    objKardex.totven = "0";
+                    objKardex.totven = objKardex.costot;
                     objKardex.codcli = obj.codcli;
                     objKardex.codven = obj.codven;
-                    objKardex.codusu = "TEAMPLUS";
+                    objKardex.codusu = "MIGRACION";
                     objKardex.fecult = null;
                     objKardex.feccad = null;
                     objKardex.cancaja = objDet.cajas.ToString();
@@ -206,35 +232,42 @@ namespace ProgramaIntermedioPackinMicroplus
                 }
 
                 // insertar en cuentas por cobrar
-
+                Console.WriteLine(" ");
+                Console.WriteLine("..........Cuentas por cobrar de la factura: " + obj.numfac);
                 CuentasPorCobrar_SyBase_BL objCxc = new CuentasPorCobrar_SyBase_BL();
                 objCxc.numcpc = NumeroFacturaSiguienteDAL.seleccionarSiguienteSecuencialCXC();
                 objCxc.tipdoc = "FC";
                 objCxc.numtra = obj.numfac;
                 objCxc.codcli = obj.codcli;
                 objCxc.codven = obj.codven;
-                objCxc.fecemi = obj.fecfac;
-               // objCxc.fecven = "";
-               // objCxc.fectra = obj.fecfac;
-                objCxc.concep = obj.numfac;
+                objCxc.fecemi = funcionesEspeciales.convertirFecha(obj.fecfac);
+                // objCxc.fecven = "";
+                 objCxc.fectra = funcionesEspeciales.convertirFecha(obj.fecfac);
+                objCxc.concep = "Cargo a su cuenta sg FC " + obj.numfac;
                 objCxc.valcob = Convert.ToDecimal(item.USD.ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("fr-FR"));
                 objCxc.tiporg = "FAC";
                 objCxc.numorg = obj.numfac;
-                objCxc.codapu = "FC" + obj.numfac.Substring(1, 7);
-                objCxc.codap1 = "FC";
+                objCxc.codapu = "FCF0" + obj.numfac.Substring(1, 7);
+                objCxc.codap1 = "FC"+ objCxc.numcpc;
                 objCxc.codmon = "01";
-                objCxc.codusu = "MIGRACIONSM";
+                objCxc.codusu = "MIGRACION";
+                objCxc.valcot = 1;
+                objCxc.fecfac = funcionesEspeciales.convertirFecha(obj.fecfac);
                 // convertir de fecha 18/8/2021 a 2021-08-18
-               
+
                 objCxc.fecult = funcionesEspeciales.convertirFecha(obj.fecfac);
                 objCxc.referen = obj.referen;
 
                 CuentasPorCobrarSyBase_DAL.insertarCuentasPorCobrarSyBase(objCxc);
 
-                SeleccionarDatosSybaseDAL.insertarLogMigracionFactura(obj.numfac, item.INVOICE, "FINALIZADO", "");
+                Console.WriteLine("..........Guardar en log");
+                SeleccionarDatosSybaseDAL.insertarLogMigracionFactura(item.INVOICE, obj.numfac, "FINALIZADO", "");
             }
 
 
+            Console.WriteLine("--------------------------------------------------------------------------------------------");
+            Console.WriteLine("-                   Migración finalizada                                                    -");
+            Console.WriteLine("--------------------------------------------------------------------------------------------");
             Console.ReadKey();
 
 

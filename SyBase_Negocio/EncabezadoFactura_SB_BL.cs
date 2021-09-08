@@ -19,10 +19,10 @@ namespace ProgramaIntermedioPackinMicroplus.SyBase_Negocio
         public string lispre { get; set; } // LISTA DE PRECIO
         public string observ { get; set; } // OBSERVACION
         public int poriva { get; set; } // PORCENTAJE IVA
-        public double totnet { get; set; } // TOTAL NETO
-        public double totdes { get; set; } // TOTAL DESCUENTO
+        public decimal totnet { get; set; } // TOTAL NETO
+        public decimal totdes { get; set; } // TOTAL DESCUENTO
         public double totbas { get; set; } // TOTAL BASE
-        public string totfac { get; set; } // TOTAL FACTURA
+        public decimal totfac { get; set; } // TOTAL FACTURA
         public string fecven { get; set; } // FECHA DE VENCIMIENTO DEUDA FACTURA
         public string conpag { get; set; } // FORMA DE PAGO (C=CREDITO)
         public string tipefe { get; set; } // TIPO PAGO EFECTIVO
@@ -74,13 +74,13 @@ namespace ProgramaIntermedioPackinMicroplus.SyBase_Negocio
         public string codcajero { get; set; } // 
         public string tipchep { get; set; } // 
         public string valchep { get; set; } // 
-        public string excen { get; set; } // 
+        public decimal excen { get; set; } // 
         public string moivab { get; set; } // 
         public string moivas { get; set; } // 
         public string ser_a { get; set; } // 
         public string ser_b { get; set; } // 
         public string inv_a { get; set; } // 
-        public string inv_b { get; set; } // 
+        public decimal inv_b { get; set; } // 
         public string estadow { get; set; } // 
         public string codcom { get; set; } // 
         public string numdoc { get; set; } // 

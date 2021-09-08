@@ -21,14 +21,14 @@ namespace ProgramaIntermedioPackinMicroplus.SyBase_Negocio
         public decimal totren { get; set; }
         public string codiva { get; set; }
         public string codmon { get; set; }
-        public string valcot { get; set; }
+        public decimal valcot { get; set; }
         public decimal totext { get; set; }
         public string codmed { get; set; }
         public string fecfac { get; set; }
         public string cancaja { get; set; }
         public decimal cajas { get; set; }
         public string basea { get; set; }
-        public string excen { get; set; }
+        public decimal excen { get; set; }
         public string numren1 { get; set; }
         public string doctrans { get; set; }
         public string bienser { get; set; }
@@ -44,7 +44,7 @@ namespace ProgramaIntermedioPackinMicroplus.SyBase_Negocio
         public string codcen { get; set; }
         public string codfun { get; set; }
         public string desren2 { get; set; }
-        public string valcargo { get; set; }
+        public decimal valcargo { get; set; }
         public string bloquea { get; set; }
         public string codalm { get; set; }
         public string codcli { get; set; }
