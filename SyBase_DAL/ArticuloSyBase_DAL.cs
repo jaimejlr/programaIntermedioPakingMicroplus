@@ -51,9 +51,9 @@ namespace ProgramaIntermedioPackinMicroplus.SyBase_DAL
                         codArticulo = obj.codart;
 
                         String SQL_query = "INSERT INTO articulos " +
-                                            " ( codemp              , nomart              , codcla    ,codart                  ,codiva               ,    coduni           ) " +
+                                            " ( codemp              , nomart              , codcla    ,codart                  ,codiva               ,    coduni          , prec01 , prec02 , prec03 , prec04 , eximin ,  punreo, ultcos, exiact  , totcos,  cospro, codusu      , fecult     , cosfob, codcolor, cancaja, produ,  canprodu, util1,  util2,  util3, util4, desc1, desc2, desc3, desc4, promo  , bloquea , codbar , peso , bienser, activado , ice , ndigent, ndigdec, balanza, multica, subcodcla , codigofe, irbpn, alto , ancho  , profundo, modulos) " +
                                             " VALUES " +
-                                            " ( '" + codEmpresa + "', '" + obj.nomart + "', 'PT001', '" + obj.codart + "'    ,'" + obj.codiva + "'  ,'" + obj.coduni + "'  ) ";
+                                            " ( '" + codEmpresa + "', '" + obj.nomart + "', 'PT001', '" + obj.codart + "'    ,'" + obj.codiva + "'  ,'" + obj.coduni + "'  , 0     , 0      ,  0      ,   0   ,    0     ,  0   , 0     ,    0     , 0    ,  0     , 'MIGRACION' ,   getdate() ,  0    , 'G0001'  , 1     , 'N'  ,    0    ,   0  ,    0   ,   0  ,  0   ,   0  ,  0   ,  0    ,0     , 'N'  ,   'N'    ,  'N'  ,    0  ,  'B'   ,  'S'      , 0   ,0       ,  0     , 'N'   , 'S'     , 'G0001'  , 'N'     , 0     , 0    , 0    ,   0       , 'T' ) ";
                         OdbcCommand cmd = new OdbcCommand(SQL_query, connection);
                         resultado = cmd.ExecuteNonQuery().ToString();
                     }

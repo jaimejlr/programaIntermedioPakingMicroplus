@@ -22,31 +22,37 @@ namespace ProgramaIntermedioPackinMicroplus
 
             FacturaMySQL_DAL dalFacturasMySQL = new FacturaMySQL_DAL();
 
-          
+
             // crear tabla para guadar las facturas que se realizó la migración de mysql a sybase
 
+            Console.WriteLine("Seleccionando el numero máximo de factura");
             // seleccionar el máximo id de factura del sistema guardado en la tabla log
             String maximoFactura = SeleccionarDatosSybaseDAL.mtdoSeleccionarMaximaFacturaMYSQL();
             // consultar las facturas mayores al máximo id guardado en la tabla log
-
+            Console.WriteLine("Número de factura mysql: "+ maximoFactura);
             //insertar el detalle de la factura.
 
-            
+
             List<FacturasMySqlBL> listaFacturasMySQL = dalFacturasMySQL.mtdoSeleccionarTodofacturas(Convert.ToInt32(maximoFactura));
             foreach (var item in listaFacturasMySQL)
             {
                 EncabezadoFactura_SB_BL obj = new EncabezadoFactura_SB_BL();
                 obj.codemp = NumeroFacturaSiguienteDAL.seleccionarCodigoEmpresa();
+               
                 obj.numfac = NumeroFacturaSiguienteDAL.seleccionarSiguienteFactura();
+                Console.WriteLine("Seleccionar numero siguiente de facutura: "+ obj.numfac);
                 // con los datos del dae insertar el vendedor y el id se debe insertar en codven  *********
-               var datosDae= DaeDAL.mtdoSeleccionarTodofue(item.FUE);
+                var datosDae= DaeDAL.mtdoSeleccionarTodofue(item.FUE);
+                Console.WriteLine("Seleccionar datos DAE: " + datosDae.fue_pais + " " + datosDae.fue_caduca);
                 VendedorSybase_BL vendedor = new VendedorSybase_BL();
                 vendedor.nomven = datosDae.fue_pais + " " + datosDae.fue_caduca;
                 // varchar(5) en packin dae es mas de 10    055-2021-40-12345678  EEUU-31-AGO-21
                 obj.codven = VendedorSyBase_DAL.insertarVendedoresSyBase(vendedor);
+                Console.WriteLine("Seleccionar COD VEN: " + obj.codven);
                 obj.codalm = "01"; // bodega estática
 
                 // cliente hijo
+                Console.WriteLine("Gestionar clientes");
                 ClienteMySqlBL clientehijo = new ClienteMySqlBL();
                 clientehijo = ClienteMySQL_DAL.mtdoSeleccionarTodoclientes(item.cod_client);
                 var codClaseCliente = ClienteSyBase_DAL.insertarClaseClienteSyBase(clientehijo);
@@ -83,6 +89,8 @@ namespace ProgramaIntermedioPackinMicroplus
                 // obj.autorizacion = // guía hija
                 obj.totfac = item.USD;
                 obj.desinv = "S"; // desceunta en inventario
+
+                Console.WriteLine("Insertar encabezado factura");
                 insertarFacturaSybase_DAL.insertarEncabezadoFacturaSyBase(obj);
 
                 List<FacturaDetalleMySQLBL> listaDetalleFacturasMySQL = dalFacturasMySQL.mtdoSeleccionarDetallefacturas(item.INVOICE);
