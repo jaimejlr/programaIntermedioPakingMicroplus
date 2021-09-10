@@ -29,6 +29,7 @@ namespace ProgramaIntermedioPackinMicroplus
             Console.WriteLine("***Seleccionando el numero máximo de factura***");
             // seleccionar el máximo id de factura del sistema guardado en la tabla log
             String maximoFactura = SeleccionarDatosSybaseDAL.mtdoSeleccionarMaximaFacturaMYSQL();
+            
             // consultar las facturas mayores al máximo id guardado en la tabla log
             Console.WriteLine("Número de factura mysql: "+ maximoFactura);
             //insertar el detalle de la factura.
@@ -37,6 +38,8 @@ namespace ProgramaIntermedioPackinMicroplus
             List<FacturasMySqlBL> listaFacturasMySQL = dalFacturasMySQL.mtdoSeleccionarTodofacturas(Convert.ToInt32(maximoFactura));
             foreach (var item in listaFacturasMySQL)
             {
+                numerosFacturas.lm_factura_mysql = item.INVOICE;
+
                 Console.WriteLine(" ");
                 Console.WriteLine(" ......**********......");
                 Console.WriteLine(" ");
@@ -44,6 +47,12 @@ namespace ProgramaIntermedioPackinMicroplus
                 obj.codemp = NumeroFacturaSiguienteDAL.seleccionarCodigoEmpresa();
 
                 numeroFacturaSybase = NumeroFacturaSiguienteDAL.seleccionarSiguienteFactura();
+                numerosFacturas.lm_factura_sybase = numeroFacturaSybase;
+
+                Console.WriteLine("..........Guardar en log");
+                SeleccionarDatosSybaseDAL.insertarLogMigracionFactura(item.INVOICE, obj.numfac, "PENDIENTE", "");
+               
+
                 obj.numfac = "F" + numeroFacturaSybase.PadLeft(8, '0');
                 Console.WriteLine("Seleccionar numero siguiente de facutura: "+ obj.numfac);
                 // con los datos del dae insertar el vendedor y el id se debe insertar en codven  *********
@@ -271,7 +280,7 @@ namespace ProgramaIntermedioPackinMicroplus
                 CuentasPorCobrarSyBase_DAL.insertarCuentasPorCobrarSyBase(objCxc);
 
                 Console.WriteLine("..........Guardar en log");
-                SeleccionarDatosSybaseDAL.insertarLogMigracionFactura(item.INVOICE, obj.numfac, "FINALIZADO", "");
+                SeleccionarDatosSybaseDAL.actualizarLogMigracionFactura(numerosFacturas.lm_factura_mysql, numerosFacturas.lm_factura_sybase, "FINALIZADO", "");
             }
 
 

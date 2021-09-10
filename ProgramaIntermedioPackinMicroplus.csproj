@@ -85,6 +85,7 @@
     <Compile Include="MySQL_Negocio\FacturaDetalleMySQLBL.cs" />
     <Compile Include="MySQL_Negocio\FacturasMySqlBL.cs" />
     <Compile Include="MySQL_Negocio\ProveedoresMysql_BL.cs" />
+    <Compile Include="numerosFacturas.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SeleccionarDatosMysqlDAL.cs" />

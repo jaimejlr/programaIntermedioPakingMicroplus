@@ -118,46 +118,47 @@ namespace ProgramaIntermedioPackinMicroplus
         }
 
 
-        //public static void actualizarLogMigracionFactura(string lm_factura_mysql, string lm_factura_sybase, string lm_estado, string lm_mensaje)
-        //{
-        //    string resultado = "";
-        //    // EJECUTAR C:\Microplus\sourceplus\savemicro_plus.exe
-        //    using (OdbcConnection connection = new OdbcConnection(SettingsConexion.Default.conexionSybase))
-        //        try
-        //        {
-        //            connection.Open();
+        public static void actualizarLogMigracionFactura(string lm_factura_mysql, string lm_factura_sybase, string lm_estado, string lm_mensaje)
+        {
+            string resultado = "";
+            // EJECUTAR C:\Microplus\sourceplus\savemicro_plus.exe
+            using (OdbcConnection connection = new OdbcConnection(SettingsConexion.Default.conexionSybase))
+                try
+                {
+                    connection.Open();
 
-        //            String SQL_query = "UPDATE  log_migracion_mysql_sybase " +
-        //                                "   SET lm_estado = ?     "+
-        //                                "   SET lm_mensaje = ?     " +
-        //                                "  lm_factura_mysql = ? " +
-        //            OdbcCommand cmd = new OdbcCommand(SQL_query, connection);
-        //            cmd.Parameters.Add("lm_factura_mysql", OdbcType.NVarChar).Value = lm_factura_mysql;
-        //            cmd.Parameters.Add("lm_factura_sybase", OdbcType.NVarChar).Value = lm_factura_sybase;
-        //            cmd.Parameters.Add("lm_estado", OdbcType.NVarChar).Value = lm_estado;
-        //            cmd.Parameters.Add("lm_mensaje", OdbcType.NVarChar).Value = lm_mensaje;
-        //            resultado = cmd.ExecuteNonQuery().ToString();
-        //            connection.Close();
-        //            connection.Dispose();
+                    String SQL_query = "UPDATE  log_migracion_mysql_sybase " +
+                                        "   SET lm_estado = ?     " +
+                                        "   SET lm_mensaje = ?     " +
+                                        "  where lm_factura_mysql = ? " +
+                                        "  and   lm_factura_sybase = ? ";
+                    OdbcCommand cmd = new OdbcCommand(SQL_query, connection);
+                    cmd.Parameters.Add("lm_estado", OdbcType.NVarChar).Value = lm_estado;
+                    cmd.Parameters.Add("lm_mensaje", OdbcType.NVarChar).Value = lm_mensaje;
+                    cmd.Parameters.Add("lm_factura_mysql", OdbcType.NVarChar).Value = lm_factura_mysql;
+                    cmd.Parameters.Add("lm_factura_sybase", OdbcType.NVarChar).Value = lm_factura_sybase;
+                    resultado = cmd.ExecuteNonQuery().ToString();
+                    connection.Close();
+                    connection.Dispose();
 
-        //        }
-        //        catch (OdbcException ex)
-        //        {
-        //            connection.Close();
-        //            connection.Dispose();
-        //            throw new Exception(ex.Message);
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            connection.Close();
-        //            connection.Dispose();
-        //            throw new Exception(ex.Message);
-        //        }
-        //        finally
-        //        {
-        //            connection.Close();
-        //            connection.Dispose();
-        //        }
-        //}
+                }
+                catch (OdbcException ex)
+                {
+                    connection.Close();
+                    connection.Dispose();
+                    throw new Exception(ex.Message);
+                }
+                catch (Exception ex)
+                {
+                    connection.Close();
+                    connection.Dispose();
+                    throw new Exception(ex.Message);
+                }
+                finally
+                {
+                    connection.Close();
+                    connection.Dispose();
+                }
+        }
     }
 }

@@ -113,13 +113,17 @@ namespace ProgramaIntermedioPackinMicroplus.SyBase_DAL
                 {
                     connection.Close();
                     connection.Dispose();
-                    throw new Exception(ex.Message);
+                    SeleccionarDatosSybaseDAL.actualizarLogMigracionFactura(numerosFacturas.lm_factura_mysql, numerosFacturas.lm_factura_sybase, "ERROR SELC SEC CXC", ex.Message);
+
+                   // throw new Exception(ex.Message);
                 }
                 catch (Exception ex)
                 {
                     connection.Close();
                     connection.Dispose();
-                    throw new Exception(ex.Message);
+                    SeleccionarDatosSybaseDAL.actualizarLogMigracionFactura(numerosFacturas.lm_factura_mysql, numerosFacturas.lm_factura_sybase, "ERROR SELC SEC CXC", ex.Message);
+
+                  //  throw new Exception(ex.Message);
                 }
                 finally
                 {
@@ -153,13 +157,17 @@ namespace ProgramaIntermedioPackinMicroplus.SyBase_DAL
                 {
                     connection.Close();
                     connection.Dispose();
-                    throw new Exception(ex.Message);
+                    SeleccionarDatosSybaseDAL.actualizarLogMigracionFactura(numerosFacturas.lm_factura_mysql, numerosFacturas.lm_factura_sybase, "ERROR SEL SER ENCAB", ex.Message);
+
+                   // throw new Exception(ex.Message);
                 }
                 catch (Exception ex)
                 {
                     connection.Close();
                     connection.Dispose();
-                    throw new Exception(ex.Message);
+                    SeleccionarDatosSybaseDAL.actualizarLogMigracionFactura(numerosFacturas.lm_factura_mysql, numerosFacturas.lm_factura_sybase, "ERROR SEL SER ENCAB", ex.Message);
+
+                   // throw new Exception(ex.Message);
                 }
                 finally
                 {
