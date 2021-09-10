@@ -60,11 +60,12 @@ namespace ProgramaIntermedioPackinMicroplus.MySQL_DAL
                      " mercado, " +
                      " fecha_vuelo, " +
                      " c.cconsigna as cliente, c.cnombre as subcliente, " +
-                     " l.la_codigo as codigoAerolinea "+
+                     " l.la_codigo as codigoAerolinea " +
                     " from facturas f " +
                     " left outer join clientes c on c.cod_client=f.cod_client " +
                     " left outer join laerea l on f.lineaaerea = l.la_nombre  " +
-                    " where INVOICE > @INVOICE  ";
+                    " where INVOICE > @INVOICE  " +
+                    " ORDER BY INVOICE ASC ";
                     cmd = new MySqlCommand(sql, conex);
                     cmd.Parameters.Add("@INVOICE", MySqlDbType.Int32).Value = maxFacturas;
                     MySqlDataReader dr = null;

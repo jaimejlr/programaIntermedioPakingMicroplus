@@ -29,7 +29,8 @@ namespace ProgramaIntermedioPackinMicroplus.SyBase_Negocio
         public string fecult { get; set; }
         public string referen { get; set; }
         public string fecfac { get; set; }
+        public string serie { get; set; }
 
-        
+
     }
 }

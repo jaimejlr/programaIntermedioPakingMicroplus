@@ -47,7 +47,7 @@ namespace ProgramaIntermedioPackinMicroplus
 
                     // SLECCIONAR EMPRESA
 
-                    String SQL_query_empresa = "SELECT cast(isnull(max(s.lm_factura_mysql),0) as int) maxFacturaMySQL FROM log_migracion_mysql_sybase s ";
+                    String SQL_query_empresa = "SELECT cast(isnull(max(s.lm_factura_mysql),0) as int) maxFacturaMySQL FROM log_migracion_mysql_sybase s  where s.lm_estado ='FINALIZADO' ";
                     OdbcCommand cmdCodEmpresa = new OdbcCommand(SQL_query_empresa, connection);
                     resultado = cmdCodEmpresa.ExecuteScalar().ToString();
                     connection.Close();
