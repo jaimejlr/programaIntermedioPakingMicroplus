@@ -14,5 +14,10 @@ namespace ProgramaIntermedioPackinMicroplus.SyBase_Negocio
         public string codart { get; set; }
         public string codiva { get; set; }
         public string coduni { get; set; }
+        public string deta03 { get; set; }
+        public string deta04 { get; set; }
+        public string deta05 { get; set; }
+        public string deta06 { get; set; }
+        public string deta07 { get; set; }
     }
 }

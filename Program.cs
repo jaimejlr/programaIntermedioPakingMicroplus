@@ -136,6 +136,11 @@ namespace ProgramaIntermedioPackinMicroplus
                     articuloBL.codart = detalle.variedad;
                     articuloBL.codiva = "0";
                     articuloBL.coduni = "UND";
+                    articuloBL.deta03 = "ROSES";
+                    articuloBL.deta04 = "ROSAEA";
+                    articuloBL.deta05 = ""; //CODIGO ATPA (CÓDIGO PARA ADUANA USA)
+                    articuloBL.deta06 = ""; // CODIGO REGION ANDINA(CÓDIGO PARA REGIÓN LATINOAMÉRICA)
+                    articuloBL.deta07 = ""; //LARGO EN CENTIMETROS DE LA FLOR
 
                     objDet.codart = ArticuloSyBase_DAL.insertarArticuloSyBase(articuloBL); // generar código del artículo.
                     objDet.nomart = detalle.variedad;
