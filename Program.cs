@@ -103,7 +103,10 @@ namespace ProgramaIntermedioPackinMicroplus
                 
                 obj.totfac = Convert.ToDecimal(item.USD.ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("fr-FR"));
                 obj.desinv = "S"; // desceunta en inventario
-                obj.codapu = "FF0C" + obj.numfac.Substring(1, 7);
+                obj.codapu = "FCF0" + obj.numfac.Substring(1, 7);
+                //**************debe ser igual a la serie de la secuencia F0, viene de la tabla tiposecuencias. La consulta es  (     SELECT serie FROM "dbo"."tiposecuencias" where codsec = 'F0' and codemp = '01' and tiposec = 'VC_FAC'  )
+                obj.serie = NumeroFacturaSiguienteDAL.seleccionarSiguienteSerieParaEncabezadoFactura();
+                obj.numgui = obj.numfac;
 
                 Console.WriteLine("Insertar encabezado factura");
                 insertarFacturaSybase_DAL.insertarEncabezadoFacturaSyBase(obj);
@@ -155,6 +158,8 @@ namespace ProgramaIntermedioPackinMicroplus
                     objDet.valcargo = objDet.cantid;
                     objDet.codcli = obj.codcli;
                     objDet.codven = obj.codven;
+                    //*************************************************************************************
+                    objDet.codcen = ""; ///debe ser la caja a la que pertenece esa flor 
 
                     insertarFacturaSybase_DAL.insertarDetalleFacturaSyBase(objDet);
                     Console.WriteLine(" ");
@@ -177,7 +182,7 @@ namespace ProgramaIntermedioPackinMicroplus
                     objKardex.totven = objKardex.costot;
                     objKardex.codcli = obj.codcli;
                     objKardex.codven = obj.codven;
-                    objKardex.codusu = "TEAMPLUS";
+                    objKardex.codusu = "MIGRACION";
                     objKardex.fecult = funcionesEspeciales.convertirFecha(obj.fecfac); ;
                     objKardex.feccad = null;
                     objKardex.cancaja = objDet.cajas.ToString();
@@ -207,7 +212,7 @@ namespace ProgramaIntermedioPackinMicroplus
                     objKardex.cantot = objDet.cantid.ToString();
                     objKardex.cosuni = objDet.preuni.ToString();
                     objKardex.costot = (objDet.cantid * objDet.preuni).ToString();
-                    objKardex.totven = objKardex.costot;
+                    objKardex.totven = "0";
                     objKardex.codcli = obj.codcli;
                     objKardex.codven = obj.codven;
                     objKardex.codusu = "MIGRACION";
@@ -257,7 +262,7 @@ namespace ProgramaIntermedioPackinMicroplus
 
                 objCxc.fecult = funcionesEspeciales.convertirFecha(obj.fecfac);
                 objCxc.referen = obj.referen;
-
+                objCxc.serie = obj.serie;
                 CuentasPorCobrarSyBase_DAL.insertarCuentasPorCobrarSyBase(objCxc);
 
                 Console.WriteLine("..........Guardar en log");

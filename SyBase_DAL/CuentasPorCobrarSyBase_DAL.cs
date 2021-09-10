@@ -43,7 +43,7 @@ namespace ProgramaIntermedioPackinMicroplus.SyBase_DAL
                     String SQL_query = "INSERT INTO cuentasporcobrar " +
                                            " ( codemp, numcpc, tipdoc ,numtra ,codcli ,codven  , fecemi ,fecven                    ,  fectra    , concep, valcob ,tiporg  , numorg, codapu ,codap1 ,codmon ,codusu ,fecult   ,   referen  , valcot , totnet  , totiva , ncuota , serie    , cerrado ,  fecfac , canmul , establ , porinter , totalinter , codforpag , hora                                 , cajapccob ) " +
                                            " VALUES " +
-                                           " ( ?     , ?     , ?      ,?       ,?     ,?       ,      ?,  dateadd(mm, 1,getdate() ) ,      ?    ,       ?,      ?,     ?  ,      ?,      ?,     ? ,       ?,   ?   , getdate(),          ? ,   ?    ,     0  ,    0   ,   1     , '001002' , 'N'    ,    ?    , 'N'   ,  '001'  ,  0       ,   0        ,  '20'     ,  CONVERT( CHAR( 20 ), getdate(), 8 ) , '001' ) ";
+                                           " ( ?     , ?     , ?      ,?       ,?     ,?       ,      ?,  dateadd(mm, 1,getdate() ) ,      ?    ,       ?,      ?,     ?  ,      ?,      ?,     ? ,       ?,   ?   , getdate(),          ? ,   ?    ,     0  ,    0   ,   1     , ?        , 'N'    ,    ?    , 'N'   ,  '001'  ,  0       ,   0        ,  '20'     ,  CONVERT( CHAR( 20 ), getdate(), 8 ) , '001' ) ";
 
                     OdbcCommand cmd = new OdbcCommand(SQL_query, connection);
                     cmd.Parameters.Add("codemp", OdbcType.VarChar).Value = codEmpresa;
@@ -65,6 +65,7 @@ namespace ProgramaIntermedioPackinMicroplus.SyBase_DAL
                    // cmd.Parameters.Add("fecult", OdbcType.DateTime).Value = obj.fecult;
                     cmd.Parameters.Add("referen", OdbcType.VarChar).Value = obj.referen;
                     cmd.Parameters.Add("valcot", OdbcType.Decimal).Value = obj.valcot;
+                    cmd.Parameters.Add("serie", OdbcType.VarChar).Value = obj.serie;
                     cmd.Parameters.Add("fecfac", OdbcType.DateTime).Value = obj.fecfac;
 
                     resultado = cmd.ExecuteNonQuery().ToString();
