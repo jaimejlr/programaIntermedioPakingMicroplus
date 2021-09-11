@@ -29,6 +29,7 @@ namespace ProgramaIntermedioPackinMicroplus
             Console.WriteLine("***Seleccionando el numero máximo de factura***");
             // seleccionar el máximo id de factura del sistema guardado en la tabla log
             String maximoFactura = SeleccionarDatosSybaseDAL.mtdoSeleccionarMaximaFacturaMYSQL();
+            
             // consultar las facturas mayores al máximo id guardado en la tabla log
             Console.WriteLine("Número de factura mysql: "+ maximoFactura);
             //insertar el detalle de la factura.
@@ -37,6 +38,8 @@ namespace ProgramaIntermedioPackinMicroplus
             List<FacturasMySqlBL> listaFacturasMySQL = dalFacturasMySQL.mtdoSeleccionarTodofacturas(Convert.ToInt32(maximoFactura));
             foreach (var item in listaFacturasMySQL)
             {
+                numerosFacturas.lm_factura_mysql = item.INVOICE;
+
                 Console.WriteLine(" ");
                 Console.WriteLine(" ......**********......");
                 Console.WriteLine(" ");
@@ -44,8 +47,16 @@ namespace ProgramaIntermedioPackinMicroplus
                 obj.codemp = NumeroFacturaSiguienteDAL.seleccionarCodigoEmpresa();
 
                 numeroFacturaSybase = NumeroFacturaSiguienteDAL.seleccionarSiguienteFactura();
+              
+
+                
+
                 obj.numfac = "F" + numeroFacturaSybase.PadLeft(8, '0');
-                Console.WriteLine("Seleccionar numero siguiente de facutura: "+ obj.numfac);
+                numerosFacturas.lm_factura_sybase = obj.numfac;
+                Console.WriteLine("..........Guardar en log");
+                SeleccionarDatosSybaseDAL.insertarLogMigracionFactura(item.INVOICE, obj.numfac, "PENDIENTE", "");
+
+                Console.WriteLine("Seleccionar numero siguiente de facutura: "+ obj.numfac  +"  --- Número invoice: "+ item.INVOICE);
                 // con los datos del dae insertar el vendedor y el id se debe insertar en codven  *********
                 var datosDae= DaeDAL.mtdoSeleccionarTodofue(item.FUE);
                 Console.WriteLine("Seleccionar datos DAE: " + datosDae.fue_pais + " " + datosDae.fue_caduca);
@@ -107,6 +118,7 @@ namespace ProgramaIntermedioPackinMicroplus
                 //**************debe ser igual a la serie de la secuencia F0, viene de la tabla tiposecuencias. La consulta es  (     SELECT serie FROM "dbo"."tiposecuencias" where codsec = 'F0' and codemp = '01' and tiposec = 'VC_FAC'  )
                 obj.serie = NumeroFacturaSiguienteDAL.seleccionarSiguienteSerieParaEncabezadoFactura();
                 obj.numgui = obj.numfac;
+                obj.establ = "001";
 
                 Console.WriteLine("Insertar encabezado factura");
                 insertarFacturaSybase_DAL.insertarEncabezadoFacturaSyBase(obj);
@@ -115,6 +127,7 @@ namespace ProgramaIntermedioPackinMicroplus
 
                 // insertar el detalle de la factura en sybase
                 int contadorReglon = 1;
+                int codCen2 = 0;
                 foreach (var detalle in listaDetalleFacturasMySQL)
                 {
                     Console.WriteLine(" ");
@@ -130,41 +143,68 @@ namespace ProgramaIntermedioPackinMicroplus
                     objDet.codemp = obj.codemp;
                     objDet.numfac = obj.numfac;
                     objDet.numren = contadorReglon;
-                    objDet.numite = Convert.ToInt32(detalle.caja);
-
+                    //objDet.numite = Convert.ToInt32(detalle.caja);
+                    objDet.numite = Convert.ToInt32(detalle.bunches2);
                     // generar el código de artículos
                     ArticuloSyBase_BL articuloBL = new ArticuloSyBase_BL();
 
-                    articuloBL.nomart = detalle.variedad;
-                    articuloBL.codart = detalle.variedad;
+                    articuloBL.nomart = detalle.nom_producto;
+                    articuloBL.codart = detalle.cod_producto;
                     articuloBL.codiva = "0";
                     articuloBL.coduni = "UND";
+                    articuloBL.deta02 = "ROSAS";
                     articuloBL.deta03 = "ROSES";
                     articuloBL.deta04 = "ROSAEA";
                     articuloBL.deta05 = "00600.01.01"; //CODIGO ATPA (CÓDIGO PARA ADUANA USA)
                     articuloBL.deta06 = ""; // CODIGO REGION ANDINA(CÓDIGO PARA REGIÓN LATINOAMÉRICA)
-                    articuloBL.deta07 = ""; //LARGO EN CENTIMETROS DE LA FLOR
+                    articuloBL.deta07 = detalle.largo; //LARGO EN CENTIMETROS DE LA FLOR
 
                     objDet.codart = ArticuloSyBase_DAL.insertarArticuloSyBase(articuloBL); // generar código del artículo.
                     objDet.nomart = detalle.variedad;
                     objDet.coduni = "UND";//detalle.tipo_caja; //hb
                     objDet.cantid = Convert.ToDecimal(detalle.tallos.ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("fr-FR"));  // o tallos bunche
-                    objDet.preuni = Convert.ToDecimal(detalle.precio.ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("fr-FR")); //Convert.ToDouble(detalle.precio);  // o tallos bunche
+                    objDet.cantid = objDet.numite * Convert.ToInt32(detalle.tallos_bunche);
+                     objDet.preuni = Convert.ToDecimal(detalle.precio.ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("fr-FR")); //Convert.ToDouble(detalle.precio);  // o tallos bunche
                     objDet.totren = Convert.ToDecimal(detalle.valor.ToString().Replace('.',','), CultureInfo.CreateSpecificCulture("fr-FR")); //Convert.ToDouble(detalle.valor);  // valor total
-                    objDet.codiva = "0"; 
+                    objDet.totren = objDet.cantid * objDet.preuni;
+                     objDet.codiva = "0"; 
                     objDet.codmon = "01";
                     objDet.totext = Convert.ToDecimal(detalle.valor.ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("fr-FR"));  // valor total
                     objDet.codmed = detalle.tipo_caja;
-                    objDet.cajas = 1;// Convert.ToDecimal(detalle.caja.ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("fr-FR"));
+                    // Convert.ToDecimal(detalle.caja.ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("fr-FR"));
                     objDet.desren = 0;
                     objDet.valcot = 1;
                     objDet.fecfac = funcionesEspeciales.convertirFecha(obj.fecfac);
                     objDet.excen = objDet.cantid * objDet.preuni;
-                    objDet.valcargo = objDet.cantid;
+                    objDet.valcargo = Convert.ToDecimal(detalle.bunches2.ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("fr-FR"));
                     objDet.codcli = obj.codcli;
                     objDet.codven = obj.codven;
                     //*************************************************************************************
-                    objDet.codcen = detalle.tipo_caja; ///debe ser la caja a la que pertenece esa flor 
+                    var codcen = "";
+                    if (Convert.ToInt32(detalle.caja) < 9)
+                        codcen = "0" + Convert.ToInt32(detalle.caja);
+                    else
+                        codcen =Convert.ToInt32(detalle.caja).ToString();
+
+                    var auxiliarCodCen = 0;
+                   
+
+                    if (codCen2 == 0)
+                    {
+                     objDet.cajas = 1;
+                    }
+                    else if(codCen2 == Convert.ToInt32(detalle.caja))
+                    {
+                        objDet.cajas = 0;
+                    }
+                    else
+                    {
+                        objDet.cajas = 1;
+                    }
+                    codCen2 = Convert.ToInt32(detalle.caja);
+
+                    objDet.codcen = codcen;
+                    objDet.seriesdoc = detalle.tallos_bunche.ToString();
 
                     insertarFacturaSybase_DAL.insertarDetalleFacturaSyBase(objDet);
                     Console.WriteLine(" ");
@@ -271,7 +311,7 @@ namespace ProgramaIntermedioPackinMicroplus
                 CuentasPorCobrarSyBase_DAL.insertarCuentasPorCobrarSyBase(objCxc);
 
                 Console.WriteLine("..........Guardar en log");
-                SeleccionarDatosSybaseDAL.insertarLogMigracionFactura(item.INVOICE, obj.numfac, "FINALIZADO", "");
+                SeleccionarDatosSybaseDAL.actualizarLogMigracionFactura(numerosFacturas.lm_factura_mysql, numerosFacturas.lm_factura_sybase, "FINALIZADO", "");
             }
 
 

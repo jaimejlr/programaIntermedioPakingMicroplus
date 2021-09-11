@@ -63,13 +63,15 @@ namespace ProgramaIntermedioPackinMicroplus.SyBase_DAL
                 {
                     connection.Close();
                     connection.Dispose();
-                    throw new Exception(ex.Message);
+                    SeleccionarDatosSybaseDAL.actualizarLogMigracionFactura(numerosFacturas.lm_factura_mysql, numerosFacturas.lm_factura_sybase, "ERROR INS VEND", ex.Message);
+                   // throw new Exception(ex.Message);
                 }
                 catch (Exception ex)
                 {
                     connection.Close();
                     connection.Dispose();
-                    throw new Exception(ex.Message);
+                    SeleccionarDatosSybaseDAL.actualizarLogMigracionFactura(numerosFacturas.lm_factura_mysql, numerosFacturas.lm_factura_sybase, "ERROR INS VEND", ex.Message);
+                   // throw new Exception(ex.Message);
                 }
                 finally
                 {

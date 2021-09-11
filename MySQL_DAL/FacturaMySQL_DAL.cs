@@ -65,7 +65,44 @@ namespace ProgramaIntermedioPackinMicroplus.MySQL_DAL
                     " left outer join clientes c on c.cod_client=f.cod_client " +
                     " left outer join laerea l on f.lineaaerea = l.la_nombre  " +
                     " where INVOICE > @INVOICE  " +
-                    " ORDER BY INVOICE ASC ";
+                "  group by  " +
+ "                     INVOICE,   " +
+ "                      Fecha_facturacion,   " +
+ "                      guia_aerea,   " +
+ "                      NUM_PACK,   " +
+ "                      cod_proveedor,   " +
+ "                      OBSERVA,   " +
+ "                      cotizacion,   " +
+ "                      SUCRES,   " +
+ "                      USD,   " +
+ "                      PAGADA,   " +
+ "                      CONTADO,   " +
+ "                      ANULADA,   " +
+ "                      DEBE,   " +
+ "                      FUE,   " +
+ "                      precio_short,   " +
+ "                      precio_long,   " +
+ "                      NUM_FACTURA,   " +
+ "                      marca,   " +
+ "                      notificar,   " +
+ "                      tipoventa,   " +
+ "                      vendedor,   " +
+ "                      extra,   " +
+ "                      anuladas,   " +
+ "                      f.cod_client,   " +
+ "                      establecimiento,   " +
+ "                      emision,   " +
+ "                      autorizacion,   " +
+ "                      iva,   " +
+ "                      descuento,   " +
+ "                      guia_remision,   " +
+ "                      fautorizacion,   " +
+ "                      generado,   " +
+ "                      ventas,   " +
+ "                      mercado,   " +
+ "                      fecha_vuelo,   " +
+ "                       c.cconsigna "+
+ "                    ORDER BY INVOICE ASC ";
                     cmd = new MySqlCommand(sql, conex);
                     cmd.Parameters.Add("@INVOICE", MySqlDbType.Int32).Value = maxFacturas;
                     MySqlDataReader dr = null;
@@ -141,11 +178,12 @@ namespace ProgramaIntermedioPackinMicroplus.MySQL_DAL
                 try
                 {
                     MySqlCommand cmd = null;
-                    string sql = " Select f.invoice, b.tipo_caja, b.caja, fl.variedad, b.num_tallos as tallos_bunche,  " +
+                    string sql = " Select v.COD_VARIE COD_PRODUCTO ,v.VNOMBRE NOMBRE_PRODUCTO, mid(v.COD_VARIE,4) as largo, f.invoice, b.tipo_caja, b.caja, fl.variedad, b.num_tallos as tallos_bunche,  " +
                                  "(b.NUM_TALLOS) as tallos, count(b.NUM_BUNCH) As bunches2, b.precio, (b.num_tallos*b.PRECIO) as valor " +
                                  "From bunche b " +
                                  "inner join flores fl on fl.codigo=mid(b.cod_varie,1,3) " +
                                  "Left join facturas f on f.num_pack=b.num_pack " +
+                                 " LEFT JOIN variedad v on b.COD_VARIE = v.COD_VARIE "+
                                  "Where f.invoice = @INVOICE " +
                                  "Group by b.caja,b.tipo_caja, b.cod_varie,b.num_tallos,b.precio ";
                     cmd = new MySqlCommand(sql, conex);
@@ -156,6 +194,8 @@ namespace ProgramaIntermedioPackinMicroplus.MySQL_DAL
                     while (dr.Read())
                     {
                         FacturaDetalleMySQLBL obj = new FacturaDetalleMySQLBL();
+                        obj.cod_producto = dr["COD_PRODUCTO"].ToString();
+                        obj.nom_producto = dr["NOMBRE_PRODUCTO"].ToString();
                         obj.invoice = dr["invoice"].ToString();
                         obj.tipo_caja = dr["tipo_caja"].ToString();
                         obj.caja = dr["caja"].ToString().Replace(",", ".");
@@ -165,6 +205,7 @@ namespace ProgramaIntermedioPackinMicroplus.MySQL_DAL
                         obj.bunches2 = dr["bunches2"].ToString().Replace(",", ".");
                         obj.precio = dr["precio"].ToString();
                         obj.valor = dr["valor"].ToString().Replace(",", ".");
+                        obj.largo = dr["largo"].ToString().Replace(",", ".");
 
                         listaDatos.Add(obj);
                     }
@@ -174,7 +215,9 @@ namespace ProgramaIntermedioPackinMicroplus.MySQL_DAL
                 {
                     conex.Close();
                     conex.Dispose();
-                    throw ex;
+                    SeleccionarDatosSybaseDAL.actualizarLogMigracionFactura(numerosFacturas.lm_factura_mysql, numerosFacturas.lm_factura_sybase, "ERROR INSR ENCAB", ex.Message);
+
+                  //  throw ex;
                 }
                 finally
                 {
