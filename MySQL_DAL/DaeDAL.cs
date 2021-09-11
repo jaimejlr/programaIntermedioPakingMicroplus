@@ -31,9 +31,10 @@ namespace ProgramaIntermedioPackinMicroplus.MySQL_DAL
                      " fue_distrito, " +
                      " fue_anio, " +
                      " fue_codigo, " +
-                     " fue_ingreso " +
-                    " from fue " +
-                    " where fue_manifiesto = @fue_manifiesto ";
+                     " fue_ingreso, p.codigo codigoPais " +
+                    " from fue, pais p  " +
+                    "  where fue_pais  = p.nombre " +
+                    " and fue_manifiesto = @fue_manifiesto ";
                     cmd = new MySqlCommand(sql, conex);
                     cmd.Parameters.Add("@fue_manifiesto", MySqlDbType.VarChar).Value = Dae;
                     MySqlDataReader dr = null;
@@ -44,12 +45,14 @@ namespace ProgramaIntermedioPackinMicroplus.MySQL_DAL
                         obj.fue_id = dr["fue_id"].ToString();
                         obj.fue_numero = dr["fue_numero"].ToString();
                         obj.fue_pais = dr["fue_pais"].ToString();
-                        obj.fue_caduca = dr["fue_caduca"].ToString();
+                        var arrayFue = dr["fue_caduca"].ToString().Split(' ');
+                        obj.fue_caduca = arrayFue[0];
                         obj.fue_manifiesto = dr["fue_manifiesto"].ToString();
                         obj.fue_distrito = dr["fue_distrito"].ToString();
                         obj.fue_anio = dr["fue_anio"].ToString();
                         obj.fue_codigo = dr["fue_codigo"].ToString();
                         obj.fue_ingreso = dr["fue_ingreso"].ToString();
+                        obj.codigoPais = dr["codigoPais"].ToString();
                     }
                     conex.Close();
                 }

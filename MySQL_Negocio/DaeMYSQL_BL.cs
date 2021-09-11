@@ -17,6 +17,7 @@ namespace ProgramaIntermedioPackinMicroplus.MySQL_Negocio
         public string fue_anio { get; set; }
         public string fue_codigo { get; set; }
         public string fue_ingreso { get; set; }
+        public string codigoPais { get; set; }
 
     }
 }

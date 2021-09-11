@@ -59,9 +59,13 @@ namespace ProgramaIntermedioPackinMicroplus
                 Console.WriteLine("Seleccionar numero siguiente de facutura: "+ obj.numfac  +"  --- Número invoice: "+ item.INVOICE);
                 // con los datos del dae insertar el vendedor y el id se debe insertar en codven  *********
                 var datosDae= DaeDAL.mtdoSeleccionarTodofue(item.FUE);
+                
                 Console.WriteLine("Seleccionar datos DAE: " + datosDae.fue_pais + " " + datosDae.fue_caduca);
                 VendedorSybase_BL vendedor = new VendedorSybase_BL();
                 vendedor.nomven = datosDae.fue_pais + " " + datosDae.fue_caduca;
+                vendedor.codusu = "MIGRACION";
+                vendedor.codzona = datosDae.codigoPais;
+                vendedor.direcven = vendedor.nomven;
                 // varchar(5) en packin dae es mas de 10    055-2021-40-12345678  EEUU-31-AGO-21
                 obj.codven = VendedorSyBase_DAL.insertarVendedoresSyBase(vendedor);
                 Console.WriteLine("Seleccionar COD VEN: " + obj.codven);
@@ -195,8 +199,8 @@ namespace ProgramaIntermedioPackinMicroplus
                     tmpartcpa.numfac = obj.numfac;
                     tmpartcpa.codart = objDet.codart;
                     tmpartcpa.nomart = objDet.nomart;
-                    tmpartcpa.numren = "1";
-                    tmpartcpa.codpro = obj.nomcli;// nombre del cleitne
+                    tmpartcpa.numren = objDet.numren.ToString();
+                    tmpartcpa.codpro = objDet.codcli;
                     tmpartcpa.peso = "1";
                     tmpartcpa.tiporg = "FAC";
 
