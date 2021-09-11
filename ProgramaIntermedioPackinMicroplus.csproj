@@ -24,7 +24,7 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>8</ApplicationRevision>
+    <ApplicationRevision>9</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -102,6 +102,7 @@
     <Compile Include="SyBase_DAL\insertarFacturaSybase_DAL.cs" />
     <Compile Include="SyBase_DAL\karde_SyBase_DAL.cs" />
     <Compile Include="SyBase_DAL\NumeroFacturaSiguienteDAL.cs" />
+    <Compile Include="SyBase_DAL\tmpartcpa_SyBase_DAL.cs" />
     <Compile Include="SyBase_DAL\transportistaSyBase_DAL.cs" />
     <Compile Include="SyBase_DAL\VendedorSyBase_DAL.cs" />
     <Compile Include="SyBase_Negocio\ArticuloSyBase_BL.cs" />
@@ -110,6 +111,7 @@
     <Compile Include="SyBase_Negocio\DetalleFacturaSyBaseBL.cs" />
     <Compile Include="SyBase_Negocio\EncabezadoFactura_SB_BL.cs" />
     <Compile Include="SyBase_Negocio\Karde_SyBase_BL.cs" />
+    <Compile Include="SyBase_Negocio\tmpartcpa_SyBase_BL.cs" />
     <Compile Include="SyBase_Negocio\transportistaSyBase_BL.cs" />
     <Compile Include="SyBase_Negocio\VendedorSybase_BL.cs" />
   </ItemGroup>

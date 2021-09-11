@@ -160,7 +160,7 @@ namespace ProgramaIntermedioPackinMicroplus
                     articuloBL.deta07 = detalle.largo; //LARGO EN CENTIMETROS DE LA FLOR
 
                     objDet.codart = ArticuloSyBase_DAL.insertarArticuloSyBase(articuloBL); // generar código del artículo.
-                    objDet.nomart = detalle.variedad;
+                    objDet.nomart = detalle.nom_producto;
                     objDet.coduni = "UND";//detalle.tipo_caja; //hb
                     objDet.cantid = Convert.ToDecimal(detalle.tallos.ToString().Replace('.', ','), CultureInfo.CreateSpecificCulture("fr-FR"));  // o tallos bunche
                     objDet.cantid = objDet.numite * Convert.ToInt32(detalle.tallos_bunche);
@@ -187,11 +187,24 @@ namespace ProgramaIntermedioPackinMicroplus
                         codcen =Convert.ToInt32(detalle.caja).ToString();
 
                     var auxiliarCodCen = 0;
-                   
+
+
+                    ///--------------------------
+                    ///
+                    tmpartcpa_SyBase_BL tmpartcpa = new tmpartcpa_SyBase_BL();
+                    tmpartcpa.numfac = obj.numfac;
+                    tmpartcpa.codart = objDet.codart;
+                    tmpartcpa.nomart = objDet.nomart;
+                    tmpartcpa.numren = "1";
+                    tmpartcpa.codpro = obj.nomcli;// nombre del cleitne
+                    tmpartcpa.peso = "1";
+                    tmpartcpa.tiporg = "FAC";
+
 
                     if (codCen2 == 0)
                     {
                      objDet.cajas = 1;
+                        tmpartcpa_SyBase_DAL.insertartmpartcpaSyBase(tmpartcpa);
                     }
                     else if(codCen2 == Convert.ToInt32(detalle.caja))
                     {
@@ -200,6 +213,7 @@ namespace ProgramaIntermedioPackinMicroplus
                     else
                     {
                         objDet.cajas = 1;
+                        tmpartcpa_SyBase_DAL.insertartmpartcpaSyBase(tmpartcpa);
                     }
                     codCen2 = Convert.ToInt32(detalle.caja);
 
