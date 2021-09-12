@@ -10,3 +10,4 @@ C:\Users\jaime\source\repos\ProgramaIntermedioPackinMicroplus\bin\Debug\Programa
 C:\Users\jaime\source\repos\ProgramaIntermedioPackinMicroplus\bin\Debug\ProgramaIntermedioPackinMicroplus.application
 C:\Users\jaime\source\repos\ProgramaIntermedioPackinMicroplus\obj\Debug\ProgramaIntermedioPackinMicroplus.exe.manifest
 C:\Users\jaime\source\repos\ProgramaIntermedioPackinMicroplus\obj\Debug\ProgramaIntermedioPackinMicroplus.application
+C:\Users\jaime\source\repos\ProgramaIntermedioPackinMicroplus\obj\Debug\ProgramaIntermedioPackinMicroplus.csproj.AssemblyReference.cache

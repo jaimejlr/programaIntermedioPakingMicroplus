@@ -65,7 +65,7 @@ namespace ProgramaIntermedioPackinMicroplus
                 vendedor.nomven = datosDae.fue_pais + " " + datosDae.fue_caduca;
                 vendedor.codusu = "MIGRACION";
                 vendedor.codzona = datosDae.codigoPais;
-                vendedor.direcven = vendedor.nomven;
+                vendedor.direcven = item.FUE;
                 // varchar(5) en packin dae es mas de 10    055-2021-40-12345678  EEUU-31-AGO-21
                 obj.codven = VendedorSyBase_DAL.insertarVendedoresSyBase(vendedor);
                 Console.WriteLine("Seleccionar COD VEN: " + obj.codven);
