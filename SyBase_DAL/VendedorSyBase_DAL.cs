@@ -48,9 +48,9 @@ namespace ProgramaIntermedioPackinMicroplus.SyBase_DAL
                         codVendedor = codVendedor.PadLeft(5, '0');
 
                         String SQL_query = "INSERT INTO vendedorescob " +
-                                            " ( codemp              , codven                , nomven              , codusu             , codzona            , direcven            , fecult) " +
+                                            " ( codemp              , codven                , nomven              , codusu             , codzona            , direcven            , fecult   , codcla) " +
                                             " VALUES " +
-                                            " ( '" + codEmpresa + "', '" + codVendedor + "', '" + obj.nomven + "' , '"+ obj.codusu +"'  , '"+ obj.codzona+"', '"+ obj.direcven+ "', getdate()) ";
+                                            " ( '" + codEmpresa + "', '" + codVendedor + "', '" + obj.nomven + "' , '"+ obj.codusu +"'  , '"+ obj.codzona+"', '"+ obj.direcven+ "', getdate(), '"+obj.codcla+"') ";
                         OdbcCommand cmd = new OdbcCommand(SQL_query, connection);
                         resultado = cmd.ExecuteNonQuery().ToString();
                     }

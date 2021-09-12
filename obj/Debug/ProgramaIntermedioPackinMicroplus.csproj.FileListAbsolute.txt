@@ -11,3 +11,5 @@ C:\Users\jaime\source\repos\ProgramaIntermedioPackinMicroplus\bin\Debug\Programa
 C:\Users\jaime\source\repos\ProgramaIntermedioPackinMicroplus\obj\Debug\ProgramaIntermedioPackinMicroplus.exe.manifest
 C:\Users\jaime\source\repos\ProgramaIntermedioPackinMicroplus\obj\Debug\ProgramaIntermedioPackinMicroplus.application
 C:\Users\jaime\source\repos\ProgramaIntermedioPackinMicroplus\obj\Debug\ProgramaIntermedioPackinMicroplus.csproj.AssemblyReference.cache
+C:\Users\jaime\source\repos\ProgramaIntermedioPackinMicroplus\obj\Debug\ProgramaIntermedioPackinMicroplus.Properties.Resources.resources
+C:\Users\jaime\source\repos\ProgramaIntermedioPackinMicroplus\obj\Debug\ProgramaIntermedioPackinMicroplus.csproj.GenerateResource.cache

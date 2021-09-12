@@ -66,6 +66,7 @@ namespace ProgramaIntermedioPackinMicroplus
                 vendedor.codusu = "MIGRACION";
                 vendedor.codzona = datosDae.codigoPais;
                 vendedor.direcven = item.FUE;
+                vendedor.codcla = "003";
                 // varchar(5) en packin dae es mas de 10    055-2021-40-12345678  EEUU-31-AGO-21
                 obj.codven = VendedorSyBase_DAL.insertarVendedoresSyBase(vendedor);
                 Console.WriteLine("Seleccionar COD VEN: " + obj.codven);
@@ -97,7 +98,7 @@ namespace ProgramaIntermedioPackinMicroplus
                 obj.abofac = "X";
                 obj.conpag = "C";
                 obj.tipefe = "X";
-                obj.nomcli = item.cliente;
+                obj.nomcli = clientehijo.CNOMBRE;
                 obj.referen = item.INVOICE;
                var proveedores = ProveedorMysql_DAL.mtdoSeleccionarTodoproveedores(item.cod_proveedor);
                 // insertar en datosvehículos para obtener un código del mismo *****
@@ -185,7 +186,7 @@ namespace ProgramaIntermedioPackinMicroplus
                     objDet.codven = obj.codven;
                     //*************************************************************************************
                     var codcen = "";
-                    if (Convert.ToInt32(detalle.caja) < 9)
+                    if (Convert.ToInt32(detalle.caja) < 10)
                         codcen = "0" + Convert.ToInt32(detalle.caja);
                     else
                         codcen =Convert.ToInt32(detalle.caja).ToString();

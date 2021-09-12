@@ -15,5 +15,6 @@ namespace ProgramaIntermedioPackinMicroplus.SyBase_Negocio
         public string fecult { get; set; }
         public string codzona { get; set; }
         public string direcven { get; set; }
+        public string codcla { get; set; }
     }
 }
