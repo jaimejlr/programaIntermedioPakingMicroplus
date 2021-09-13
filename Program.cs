@@ -85,7 +85,8 @@ namespace ProgramaIntermedioPackinMicroplus
                 ClienteMySqlBL clientehijo = new ClienteMySqlBL();
                 clientehijo = ClienteMySQL_DAL.mtdoSeleccionarTodoclientes(item.cod_client);
                 var codClaseCliente = ClienteSyBase_DAL.insertarClaseClienteSyBase(clientehijo);
-                obj.codcli = ClienteSyBase_DAL.insertarClienteSyBase(clientehijo, codClaseCliente);
+
+                obj.codcli = ClienteSyBase_DAL.insertarClienteSyBase(clientehijo, codClaseCliente, datosDae.codigoPais);
                 obj.rucced = clientehijo.identificacion;
                 obj.idcliente = clientehijo.identificacion;
                 obj.idcliguia = clientehijo.identificacion;

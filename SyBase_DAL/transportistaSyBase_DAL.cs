@@ -29,13 +29,14 @@ namespace ProgramaIntermedioPackinMicroplus.SyBase_DAL
 
 
                     // verificar si existe cliente
-                    String SQL_query_verificar_transpotista = "SELECT codtrans FROM transportistas where codemp = '" + codEmpresa + "'  and codtrans = '" + obj.codtrans + "' and nomtrans= '" + obj.nomtrans + "'  ";
+                    String SQL_query_verificar_transpotista = "SELECT codtrans FROM transportistas where codemp = '"+ codEmpresa +"'  and nomtrans = '"+ obj.nomtrans +"'  ";
                     OdbcCommand cmdVerificarTransportista = new OdbcCommand(SQL_query_verificar_transpotista, connection);
                     OdbcDataReader dr = null;
                     dr = cmdVerificarTransportista.ExecuteReader();
                     while (dr.Read())
                     {
                         codTransportista = dr["codtrans"].ToString();
+                        resultado = codTransportista;
                     }
 
                     if (codTransportista == "")
@@ -48,6 +49,7 @@ namespace ProgramaIntermedioPackinMicroplus.SyBase_DAL
                                             " ( '" + codEmpresa + "', '" + obj.codtrans + "', '" + obj.nomtrans + "'  ) ";
                         OdbcCommand cmd = new OdbcCommand(SQL_query, connection);
                         resultado = cmd.ExecuteNonQuery().ToString();
+                        resultado = obj.codtrans;
                     }
                     connection.Close();
                     connection.Dispose();
@@ -74,7 +76,7 @@ namespace ProgramaIntermedioPackinMicroplus.SyBase_DAL
                     connection.Close();
                     connection.Dispose();
                 }
-            return obj.nomtrans;
+            return resultado;
         }
     }
 }
