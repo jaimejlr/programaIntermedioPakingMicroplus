@@ -17,7 +17,7 @@ namespace ProgramaIntermedioPackinMicroplus.MySQL_DAL
         public static ProveedoresMysql_BL mtdoSeleccionarTodoproveedores(String codProveedor)
         {
             ProveedoresMysql_BL obj = new ProveedoresMysql_BL();
-            using (MySqlConnection conex = new MySqlConnection(SettingsConexion.Default.conexionMySql))
+            using (MySqlConnection conex = new MySqlConnection(numerosFacturas.lm_cadena_conexion_MySQL))
             {
                 try
                 {

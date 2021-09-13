@@ -17,7 +17,7 @@ namespace ProgramaIntermedioPackinMicroplus.MySQL_DAL
         public List<FacturasMySqlBL> mtdoSeleccionarTodofacturas(int maxFacturas)
         {
             List<FacturasMySqlBL> listaDatos = new List<FacturasMySqlBL>();
-            using (MySqlConnection conex = new MySqlConnection(SettingsConexion.Default.conexionMySql))
+            using (MySqlConnection conex = new MySqlConnection(numerosFacturas.lm_cadena_conexion_MySQL))
             {
                 try
                 {
@@ -158,7 +158,9 @@ namespace ProgramaIntermedioPackinMicroplus.MySQL_DAL
                 {
                     conex.Close();
                     conex.Dispose();
-                    throw ex;
+                    SeleccionarDatosSybaseDAL.actualizarLogMigracionFactura(numerosFacturas.lm_factura_mysql, numerosFacturas.lm_factura_sybase, "ERROR SELC FCT MYSQL", ex.Message);
+
+                   // throw ex;
                 }
                 finally
                 {
@@ -173,7 +175,7 @@ namespace ProgramaIntermedioPackinMicroplus.MySQL_DAL
         public List<FacturaDetalleMySQLBL> mtdoSeleccionarDetallefacturas(string numFactura)
         {
             List<FacturaDetalleMySQLBL> listaDatos = new List<FacturaDetalleMySQLBL>();
-            using (MySqlConnection conex = new MySqlConnection(SettingsConexion.Default.conexionMySql))
+            using (MySqlConnection conex = new MySqlConnection(numerosFacturas.lm_cadena_conexion_MySQL))
             {
                 try
                 {

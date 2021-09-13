@@ -17,7 +17,7 @@ namespace ProgramaIntermedioPackinMicroplus.MySQL_DAL
         public static DaeMYSQL_BL mtdoSeleccionarTodofue(String Dae)
         {
             DaeMYSQL_BL obj = new DaeMYSQL_BL();
-            using (MySqlConnection conex = new MySqlConnection(SettingsConexion.Default.conexionMySql))
+            using (MySqlConnection conex = new MySqlConnection(numerosFacturas.lm_cadena_conexion_MySQL))
             {
                 try
                 {

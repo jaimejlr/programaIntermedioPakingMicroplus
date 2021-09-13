@@ -17,6 +17,11 @@ namespace ProgramaIntermedioPackinMicroplus
     {
         static void Main(string[] args)
         {
+
+            ParametrosGeneralesDAL parametrosDAL = new ParametrosGeneralesDAL();
+            parametrosDAL.mtdoSeleccionarDatosEmail();
+            numerosFacturas.lm_cadena_conexion_MySQL = parametrosDAL.mtdoSeleccionarDatosCadenaConexion();
+
             String numeroFacturaSybase = "";
 
             Console.WriteLine("inicio");

@@ -14,7 +14,7 @@ namespace ProgramaIntermedioPackinMicroplus
         public bool ProvarConexion()
         {
             bool resultado = false;
-            using (MySqlConnection connection = new MySqlConnection(SettingsConexion.Default.conexionMySql))
+            using (MySqlConnection connection = new MySqlConnection(numerosFacturas.lm_cadena_conexion_MySQL))
             {
                 try
                 {

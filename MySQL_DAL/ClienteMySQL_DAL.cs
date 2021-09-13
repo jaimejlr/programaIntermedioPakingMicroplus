@@ -13,7 +13,7 @@ namespace ProgramaIntermedioPackinMicroplus.MySQL_DAL
         public static ClienteMySqlBL mtdoSeleccionarTodoclientes(String codCliente)
         {
             ClienteMySqlBL obj = new ClienteMySqlBL();
-            using (MySqlConnection conex = new MySqlConnection(SettingsConexion.Default.conexionMySql))
+            using (MySqlConnection conex = new MySqlConnection(numerosFacturas.lm_cadena_conexion_MySQL))
             {
                 try
                 {
@@ -120,7 +120,7 @@ namespace ProgramaIntermedioPackinMicroplus.MySQL_DAL
         public static ClienteMySqlBL mtdoSeleccionarTodoclientesPadres(String CCONSIGNA)
         {
             ClienteMySqlBL obj = new ClienteMySqlBL();
-            using (MySqlConnection conex = new MySqlConnection(SettingsConexion.Default.conexionMySql))
+            using (MySqlConnection conex = new MySqlConnection(numerosFacturas.lm_cadena_conexion_MySQL))
             {
                 try
                 {

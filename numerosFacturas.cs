@@ -12,5 +12,6 @@ namespace ProgramaIntermedioPackinMicroplus
         public static string lm_factura_sybase { get; set; }
         public static string lm_estado { get; set; }
         public static string lm_mensaje { get; set; }
+        public static string lm_cadena_conexion_MySQL { get; set; }
     }
 }

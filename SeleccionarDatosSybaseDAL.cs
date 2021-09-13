@@ -138,6 +138,21 @@ namespace ProgramaIntermedioPackinMicroplus
                     cmd.Parameters.Add("lm_factura_mysql", OdbcType.NVarChar).Value = lm_factura_mysql;
                     cmd.Parameters.Add("lm_factura_sybase", OdbcType.NVarChar).Value = lm_factura_sybase;
                     resultado = cmd.ExecuteNonQuery().ToString();
+
+                    if(EnviarCorreoBL.EnvioCorreo)
+                    {
+                        if (lm_estado == "PENDIENTE")
+                        {
+                        }
+                        else if (lm_estado == "FINALIZADO")
+                        {
+                        }
+                        else
+                        {
+                           enviarCorreo.EnvioEmail(EnviarCorreoBL.Para, "", "", EnviarCorreoBL.nombreEmail, "ERRO MIGRACION " + numerosFacturas.lm_factura_mysql + " " + numerosFacturas.lm_factura_sybase, lm_mensaje, "", "");
+                        }
+
+                    }
                     connection.Close();
                     connection.Dispose();
 
@@ -146,13 +161,13 @@ namespace ProgramaIntermedioPackinMicroplus
                 {
                     connection.Close();
                     connection.Dispose();
-                    throw new Exception(ex.Message);
+                  //  throw new Exception(ex.Message);
                 }
                 catch (Exception ex)
                 {
                     connection.Close();
                     connection.Dispose();
-                    throw new Exception(ex.Message);
+                   // throw new Exception(ex.Message);
                 }
                 finally
                 {
