@@ -168,7 +168,7 @@ namespace ProgramaIntermedioPackinMicroplus
         //        insert into ak_parametros_generales
         //      (pg_id_parametro, pg_id_id_parametro, pg_codigo, pg_descripcion, pg_valor, pg_estado, pg_orden)
         //values
-        //  (4, 2, 'NOMBRE_EMAIL', 'NOMBRE QUE APARECE AL DESTINATARIO', 'MIGRACION', 'A', NULL);
+        //  (4, 2, 'NOMBRE_EMAIL', 'NOMBRE QUE APARECE AL DESTINATARIO', 'lrsoftsolution.com@gmail.com', 'A', NULL);
 
         //        insert into ak_parametros_generales
         //       (pg_id_parametro, pg_id_id_parametro, pg_codigo, pg_descripcion, pg_valor, pg_estado, pg_orden)

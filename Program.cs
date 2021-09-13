@@ -20,6 +20,9 @@ namespace ProgramaIntermedioPackinMicroplus
 
             ParametrosGeneralesDAL parametrosDAL = new ParametrosGeneralesDAL();
             parametrosDAL.mtdoSeleccionarDatosEmail();
+
+          //  enviarCorreo.EnvioEmail(EnviarCorreoBL.Para, "", "", EnviarCorreoBL.nombreEmail, "ERRO MIGRACION " + numerosFacturas.lm_factura_mysql + " " + numerosFacturas.lm_factura_sybase, "Prueba de envío mail", "", "");
+
             numerosFacturas.lm_cadena_conexion_MySQL = parametrosDAL.mtdoSeleccionarDatosCadenaConexion();
 
             String numeroFacturaSybase = "";
