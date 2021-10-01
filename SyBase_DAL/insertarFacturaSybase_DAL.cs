@@ -18,12 +18,15 @@ namespace ProgramaIntermedioPackinMicroplus.SyBase_DAL
             using (OdbcConnection connection = new OdbcConnection(SettingsConexion.Default.conexionSybase))
                 try
                 {
+
+                    string fechaFactura = funcionesEspeciales.convertirFecha(obj.fecfac);
                     String SQL_query = "INSERT INTO encabezadofacturas " +
-                         "(codemp               ,       numfac    ,    codven      ,codalm           ,codcli            , fecfac      ,lispre          , observ           , poriva       ,  totnet       ,  totdes       , totbas        , totfac         ,    fecven                   ,conpag            , tipefe,             valefe, tipche,numche,  valche, tiptar,    " + " numtar, valtar,   tipdep, numdep,  valdep, abofac, numpag, plapag, pordes,  tiptra,   numtra,  totiva,  codapu      , valcot ,codmon, codusu        ,       fecult        , estado,   nomcli            , referen          ,  codtrans         , desinv, otrcar,     " + "descuen,totaldesc,subtot, fchche, rucced              , dircli             , codsec,  fchdep  ,tipvar, basea,  doctrans,tiptrans, totret, totfac2, totiva2,  recibe,   serie        ,     codcajero,   tipchep, valchep,  excen           ,  moivab, moivas, ser_a,       ser_b,    " + "  inv_a,             inv_b,       estadow,  codcom,  numdoc, fechaemision,  fecharegistro, tipocomprobante, idcliente            , tpidcli, referen2, codveh               , totice,  totint,   porint,  descargado, numgui              , fecinigui,  fecfingui, coment, descargado1, impreso, establ            , totdev, facelec, " + " codDocModificado, numDocModificado ,fechaEmisionDocSustento,estabmodificado,ptoemimodificado,desguia,autorizacion,totiva3 ,claveaccesofe  ,fecautfe ,msgerrorfe ,valcom   ,porcentajeiva   ,totirbpn,  " + "   hora                                ,cajapc  ,descuadre  ,estadoconta  ,numpro  ,descargapro ,doctranspro ,numtradev ,codsecgui ,facelecgui ,claveaccesofegui           ,autorizaciongui,fecautfegui  ,serieguia ,referen3 ,motivo  ,ptopartida  ,ptollegada   ,idcliguia              ,nomcliguia                 )   " +
+                         "(codemp               ,       numfac              ,    codven      ,codalm                ,codcli            , fecfac                  ,lispre                    , observ           , poriva       ,  totnet       ,  totdes       , totbas        , totfac         ,    fecven                   ,conpag            , tipefe,             valefe, tipche,numche,  valche, tiptar,    " + " numtar, valtar,   tipdep, numdep,  valdep, abofac, numpag, plapag, pordes,  tiptra,   numtra,  totiva,  codapu      , valcot ,codmon, codusu        ,       fecult        , estado,   nomcli            , referen          ,  codtrans         , desinv, otrcar,     " + "descuen,totaldesc,subtot, fchche, rucced              , dircli             , codsec,  fchdep  ,tipvar, basea,  doctrans,tiptrans, totret, totfac2, totiva2,  recibe,   serie        ,     codcajero,   tipchep, valchep,  excen           ,  moivab, moivas, ser_a,       ser_b,    " + "  inv_a,             inv_b,       estadow,  codcom,  numdoc, fechaemision,  fecharegistro, tipocomprobante, idcliente            , tpidcli, referen2, codveh               , totice,  totint,   porint,  descargado, numgui              , fecinigui,  fecfingui, coment, descargado1, impreso, establ            , totdev, facelec, " + " codDocModificado, numDocModificado ,fechaEmisionDocSustento,estabmodificado,ptoemimodificado,desguia,autorizacion  ,totiva3 ,claveaccesofe  ,fecautfe ,msgerrorfe ,valcom   ,porcentajeiva   ,totirbpn,  " + "   hora                                ,cajapc  ,descuadre  ,estadoconta  ,numpro  ,descargapro ,doctranspro ,numtradev ,codsecgui ,facelecgui ,claveaccesofegui           ,autorizaciongui,fecautfegui  ,serieguia ,referen3 ,motivo  ,ptopartida  ,ptollegada   ,idcliguia              ,nomcliguia                 )   " +
                          " VALUES " +
-                         " ('" + obj.codemp + "',  '"+obj.numfac+"','"+obj.codven+"', '"+obj.codalm+"', '"+obj.codcli+ "', getdate()  ,'"+obj.lispre+"', '"+obj.observ+"' ,"+obj.poriva+",       ?       ,     ?         , "+obj.totbas+",      ?         , dateadd(mm, 1,getdate() )  , '" + obj.conpag+"', '"+obj.tipefe+"'    ,0.0000,'X',   NULL,    0.0000, 'X',         " + " NULL,  0.0000,    'X',      NULL,  0.0000,  'X'    ,1     , 0    ,  0.0000,   NULL    ,NULL,    0, '"+ obj.codapu+ "',1.0000, '01',   'IMPORTACION',        getdate()  ,      'P',  '" + obj.nomcli+"' , '"+obj.referen+"', '"+obj.codtrans+"' ,     'S',   0.0000, " + " NULL,  0.0000,    ?    , NULL, '"+ obj.rucced + "', '" + obj.dircli + "',   'F0',     NULL,   'X',      0,  NULL      ,NULL   ,  0.0000,  ?     , 0.0000 ,  0.0000, '"+obj.serie+"',    NULL      ,    'X',     0.0000,    ?              , 0.0000 ,      0,      0,     0.0000,     " + "   0.0000,             ?,      'D',       null,   null,    getdate() ,      getdate(),   '18'          ,  '" + obj.idcliente + "','06',     NULL,    '"+obj.codveh + "',0.0000,   0.0000,  0.0000, 'N'         ,'"+ obj.numgui + "'  ,   getdate(), getdate(),  NULL,  NULL      ,    NULL,  '"+obj.establ + "',  0.0000, 'N'   , " + "  NULL,             NULL            ,NULL                    ,NULL           ,NULL           ,'D'     ,null        ,0.0000  ,null           ,NULL     ,NULL       ,0.0000   ,NULL            ,NULL,       " + " CONVERT( CHAR( 20 ), getdate(), 8 ) ,'001'    ,0.0000     ,null        ,NULL    ,NULL         ,NULL       ,NULL       ,'00'        ,'N'  ,'" + obj.claveaccesofegui+ "'  ,NULL             ,NULL    ,'001001'  ,NULL      ,NULL   ,NULL        ,NULL         ,'"+ obj.idcliguia + "'  , '"+ obj.nomcliguia + "'  )";
+                         " ('" + obj.codemp + "',  '" + obj.numfac + "','" + obj.codven + "', '" + obj.codalm + "', '" + obj.codcli + "', ?                                 ,'"+obj.lispre+"', '"+obj.observ+"' ,"+obj.poriva+",       ?       ,     ?         , "+obj.totbas+",      ?         , dateadd(mm, 1,getdate() )  , '" + obj.conpag+"', '"+obj.tipefe+"'    ,0.0000,'X',   NULL,    0.0000, 'X',         " + " NULL,  0.0000,    'X',      NULL,  0.0000,  'X'    ,1     , 0    ,  0.0000,   NULL    ,NULL,    0, '"+ obj.codapu+ "',1.0000, '01',   'IMPORTACION',        getdate()  ,      'P',  '" + obj.nomcli+"' , '"+obj.referen+"', '"+obj.codtrans+"' ,     'S',   0.0000, " + " NULL,  0.0000,    ?    , NULL, '"+ obj.rucced + "', '" + obj.dircli + "',   'F0',     NULL,   'X',      0,  NULL      ,NULL   ,  0.0000,  ?     , 0.0000 ,  0.0000, '"+obj.serie+"',    NULL      ,    'X',     0.0000,    ?              , 0.0000 ,      0,      0,     0.0000,     " + "   0.0000,             ?,      'D',       null,   null,    getdate() ,      getdate(),   '18'          ,  '" + obj.idcliente + "','06',     NULL,    '"+obj.codveh + "',0.0000,   0.0000,  0.0000, 'N'         ,'"+ obj.numgui + "'  ,   getdate(), getdate(),  NULL,  NULL      ,    NULL,  '"+obj.establ + "',  0.0000, 'N'   , " + "  NULL,             NULL            ,NULL                    ,NULL           ,NULL           ,'D'     ,NULL       ,0.0000  ,      NULL       ,NULL     ,NULL       ,0.0000   ,NULL            ,NULL,       " + " CONVERT( CHAR( 20 ), getdate(), 8 ) ,'001'    ,0.0000     ,null        ,NULL    ,NULL         ,NULL       ,NULL       ,'00'        ,'N'  ,'" + obj.claveaccesofegui+ "'  ,NULL             ,NULL    ,'001001'  ,NULL      ,NULL   ,NULL        ,NULL         ,'"+ obj.idcliguia + "'  , '"+ obj.nomcliguia + "'  )";
                     connection.Open();
                     OdbcCommand cmd = new OdbcCommand(SQL_query, connection);
+                    cmd.Parameters.Add("fecfac", OdbcType.DateTime).Value = fechaFactura;
                     cmd.Parameters.Add("totnet", OdbcType.Decimal).Value = obj.totnet;
                     cmd.Parameters.Add("totdes", OdbcType.Decimal).Value = obj.totdes;
                     cmd.Parameters.Add("totfac", OdbcType.Decimal).Value = obj.totfac;
@@ -41,7 +44,7 @@ namespace ProgramaIntermedioPackinMicroplus.SyBase_DAL
                 {
                     connection.Close();
                     connection.Dispose();
-                    SeleccionarDatosSybaseDAL.actualizarLogMigracionFactura(numerosFacturas.lm_factura_mysql, numerosFacturas.lm_factura_sybase, "ERROR INSR ENCAB", ex.Message);
+                    SeleccionarDatosSybaseDAL.actualizarLogMigracionFactura(numerosFacturas.lm_factura_mysql, numerosFacturas.lm_factura_sybase, "ERROR INSR ENCAB", ex.Message +" "+ex.StackTrace);
 
                    // throw new Exception(ex.Message);
                 }
@@ -49,7 +52,7 @@ namespace ProgramaIntermedioPackinMicroplus.SyBase_DAL
                 {
                     connection.Close();
                     connection.Dispose();
-                    SeleccionarDatosSybaseDAL.actualizarLogMigracionFactura(numerosFacturas.lm_factura_mysql, numerosFacturas.lm_factura_sybase, "ERROR INSR ENCAB", ex.Message);
+                    SeleccionarDatosSybaseDAL.actualizarLogMigracionFactura(numerosFacturas.lm_factura_mysql, numerosFacturas.lm_factura_sybase, "ERROR INSR ENCAB", ex.Message +" "+ex.StackTrace);
 
                     //throw new Exception(ex.Message);
                 }
@@ -114,7 +117,7 @@ namespace ProgramaIntermedioPackinMicroplus.SyBase_DAL
                     connection.Close();
                     connection.Dispose();
 
-                    SeleccionarDatosSybaseDAL.actualizarLogMigracionFactura(numerosFacturas.lm_factura_mysql, numerosFacturas.lm_factura_sybase, "ERROR INSR REGLON FAC", ex.Message);
+                    SeleccionarDatosSybaseDAL.actualizarLogMigracionFactura(numerosFacturas.lm_factura_mysql, numerosFacturas.lm_factura_sybase, "ERROR INSR REGLON FAC", ex.Message +" "+ex.StackTrace);
 
                     //throw new Exception(ex.Message);
                 }
@@ -122,7 +125,7 @@ namespace ProgramaIntermedioPackinMicroplus.SyBase_DAL
                 {
                     connection.Close();
                     connection.Dispose();
-                    SeleccionarDatosSybaseDAL.actualizarLogMigracionFactura(numerosFacturas.lm_factura_mysql, numerosFacturas.lm_factura_sybase, "ERROR INSR REGLON FAC", ex.Message);
+                    SeleccionarDatosSybaseDAL.actualizarLogMigracionFactura(numerosFacturas.lm_factura_mysql, numerosFacturas.lm_factura_sybase, "ERROR INSR REGLON FAC", ex.Message +" "+ex.StackTrace);
 
                     //throw new Exception(ex.Message);
                 }

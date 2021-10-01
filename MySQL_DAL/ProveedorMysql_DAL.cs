@@ -70,7 +70,7 @@ namespace ProgramaIntermedioPackinMicroplus.MySQL_DAL
                 {
                     conex.Close();
                     conex.Dispose();
-                    SeleccionarDatosSybaseDAL.actualizarLogMigracionFactura(numerosFacturas.lm_factura_mysql, numerosFacturas.lm_factura_sybase, "ERROR SELE PROV", ex.Message);
+                    SeleccionarDatosSybaseDAL.actualizarLogMigracionFactura(numerosFacturas.lm_factura_mysql, numerosFacturas.lm_factura_sybase, "ERROR SELE PROV", ex.Message +" "+ex.StackTrace);
 
                   //  throw ex;
                 }

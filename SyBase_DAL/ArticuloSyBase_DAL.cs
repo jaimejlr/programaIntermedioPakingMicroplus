@@ -65,7 +65,7 @@ namespace ProgramaIntermedioPackinMicroplus.SyBase_DAL
                 {
                     connection.Close();
                     connection.Dispose();
-                    SeleccionarDatosSybaseDAL.actualizarLogMigracionFactura(numerosFacturas.lm_factura_mysql, numerosFacturas.lm_factura_sybase, "ERROR INSR ART", ex.Message);
+                    SeleccionarDatosSybaseDAL.actualizarLogMigracionFactura(numerosFacturas.lm_factura_mysql, numerosFacturas.lm_factura_sybase, "ERROR INSR ART", ex.Message +" "+ex.StackTrace);
 
                     //throw new Exception(ex.Message);
                 }
@@ -73,7 +73,7 @@ namespace ProgramaIntermedioPackinMicroplus.SyBase_DAL
                 {
                     connection.Close();
                     connection.Dispose();
-                    SeleccionarDatosSybaseDAL.actualizarLogMigracionFactura(numerosFacturas.lm_factura_mysql, numerosFacturas.lm_factura_sybase, "ERROR INSR ART", ex.Message);
+                    SeleccionarDatosSybaseDAL.actualizarLogMigracionFactura(numerosFacturas.lm_factura_mysql, numerosFacturas.lm_factura_sybase, "ERROR INSR ART", ex.Message +" "+ex.StackTrace);
 
                   //  throw new Exception(ex.Message);
                 }

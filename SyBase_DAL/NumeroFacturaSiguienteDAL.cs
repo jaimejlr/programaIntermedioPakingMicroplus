@@ -113,7 +113,7 @@ namespace ProgramaIntermedioPackinMicroplus.SyBase_DAL
                 {
                     connection.Close();
                     connection.Dispose();
-                    SeleccionarDatosSybaseDAL.actualizarLogMigracionFactura(numerosFacturas.lm_factura_mysql, numerosFacturas.lm_factura_sybase, "ERROR SELC SEC CXC", ex.Message);
+                    SeleccionarDatosSybaseDAL.actualizarLogMigracionFactura(numerosFacturas.lm_factura_mysql, numerosFacturas.lm_factura_sybase, "ERROR SELC SEC CXC", ex.Message +" "+ex.StackTrace);
 
                    // throw new Exception(ex.Message);
                 }
@@ -121,7 +121,7 @@ namespace ProgramaIntermedioPackinMicroplus.SyBase_DAL
                 {
                     connection.Close();
                     connection.Dispose();
-                    SeleccionarDatosSybaseDAL.actualizarLogMigracionFactura(numerosFacturas.lm_factura_mysql, numerosFacturas.lm_factura_sybase, "ERROR SELC SEC CXC", ex.Message);
+                    SeleccionarDatosSybaseDAL.actualizarLogMigracionFactura(numerosFacturas.lm_factura_mysql, numerosFacturas.lm_factura_sybase, "ERROR SELC SEC CXC", ex.Message +" "+ex.StackTrace);
 
                   //  throw new Exception(ex.Message);
                 }
@@ -157,7 +157,7 @@ namespace ProgramaIntermedioPackinMicroplus.SyBase_DAL
                 {
                     connection.Close();
                     connection.Dispose();
-                    SeleccionarDatosSybaseDAL.actualizarLogMigracionFactura(numerosFacturas.lm_factura_mysql, numerosFacturas.lm_factura_sybase, "ERROR SEL SER ENCAB", ex.Message);
+                    SeleccionarDatosSybaseDAL.actualizarLogMigracionFactura(numerosFacturas.lm_factura_mysql, numerosFacturas.lm_factura_sybase, "ERROR SEL SER ENCAB", ex.Message +" "+ex.StackTrace);
 
                    // throw new Exception(ex.Message);
                 }
@@ -165,7 +165,7 @@ namespace ProgramaIntermedioPackinMicroplus.SyBase_DAL
                 {
                     connection.Close();
                     connection.Dispose();
-                    SeleccionarDatosSybaseDAL.actualizarLogMigracionFactura(numerosFacturas.lm_factura_mysql, numerosFacturas.lm_factura_sybase, "ERROR SEL SER ENCAB", ex.Message);
+                    SeleccionarDatosSybaseDAL.actualizarLogMigracionFactura(numerosFacturas.lm_factura_mysql, numerosFacturas.lm_factura_sybase, "ERROR SEL SER ENCAB", ex.Message +" "+ex.StackTrace);
 
                    // throw new Exception(ex.Message);
                 }

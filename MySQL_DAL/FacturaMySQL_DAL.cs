@@ -14,7 +14,7 @@ namespace ProgramaIntermedioPackinMicroplus.MySQL_DAL
 
         // **** NOTA: Eliminar la última coma antes del from en la sentencia SQL *** 
 
-        public List<FacturasMySqlBL> mtdoSeleccionarTodofacturas(int maxFacturas)
+        public List<FacturasMySqlBL> mtdoSeleccionarTodofacturas(int inicioInvoce, int finInvoce)
         {
             List<FacturasMySqlBL> listaDatos = new List<FacturasMySqlBL>();
             using (MySqlConnection conex = new MySqlConnection(numerosFacturas.lm_cadena_conexion_MySQL))
@@ -64,7 +64,7 @@ namespace ProgramaIntermedioPackinMicroplus.MySQL_DAL
                     " from facturas f " +
                     " left outer join clientes c on c.cod_client=f.cod_client " +
                     " left outer join laerea l on f.lineaaerea = l.la_nombre  " +
-                    " where INVOICE > @INVOICE  " +
+                    " where INVOICE >= @INVOICE AND INVOICE <= @INVOICEFIN  " +
                 "  group by  " +
  "                     INVOICE,   " +
  "                      Fecha_facturacion,   " +
@@ -104,7 +104,8 @@ namespace ProgramaIntermedioPackinMicroplus.MySQL_DAL
  "                       c.cconsigna "+
  "                    ORDER BY INVOICE ASC ";
                     cmd = new MySqlCommand(sql, conex);
-                    cmd.Parameters.Add("@INVOICE", MySqlDbType.Int32).Value = maxFacturas;
+                    cmd.Parameters.Add("@INVOICE", MySqlDbType.Int32).Value = inicioInvoce;
+                    cmd.Parameters.Add("@INVOICEFIN", MySqlDbType.Int32).Value = finInvoce;
                     MySqlDataReader dr = null;
                     conex.Open();
                     dr = cmd.ExecuteReader();
@@ -158,7 +159,7 @@ namespace ProgramaIntermedioPackinMicroplus.MySQL_DAL
                 {
                     conex.Close();
                     conex.Dispose();
-                    SeleccionarDatosSybaseDAL.actualizarLogMigracionFactura(numerosFacturas.lm_factura_mysql, numerosFacturas.lm_factura_sybase, "ERROR SELC FCT MYSQL", ex.Message);
+                    SeleccionarDatosSybaseDAL.actualizarLogMigracionFactura(numerosFacturas.lm_factura_mysql, numerosFacturas.lm_factura_sybase, "ERROR SELC FCT MYSQL", ex.Message +" "+ex.StackTrace);
 
                    // throw ex;
                 }
@@ -217,7 +218,7 @@ namespace ProgramaIntermedioPackinMicroplus.MySQL_DAL
                 {
                     conex.Close();
                     conex.Dispose();
-                    SeleccionarDatosSybaseDAL.actualizarLogMigracionFactura(numerosFacturas.lm_factura_mysql, numerosFacturas.lm_factura_sybase, "ERROR INSR ENCAB", ex.Message);
+                    SeleccionarDatosSybaseDAL.actualizarLogMigracionFactura(numerosFacturas.lm_factura_mysql, numerosFacturas.lm_factura_sybase, "ERROR INSR ENCAB", ex.Message +" "+ex.StackTrace);
 
                   //  throw ex;
                 }

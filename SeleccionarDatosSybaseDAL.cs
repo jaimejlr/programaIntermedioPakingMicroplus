@@ -149,7 +149,7 @@ namespace ProgramaIntermedioPackinMicroplus
                         }
                         else
                         {
-                           enviarCorreo.EnvioEmail(EnviarCorreoBL.Para, "", "", EnviarCorreoBL.nombreEmail, "ERRO MIGRACION " + numerosFacturas.lm_factura_mysql + " " + numerosFacturas.lm_factura_sybase, lm_mensaje, "", "");
+                           enviarCorreo.EnvioEmail(EnviarCorreoBL.Para, "", "", EnviarCorreoBL.nombreEmail, "ERRO MIGRACION " + numerosFacturas.lm_factura_mysql + " " + numerosFacturas.lm_factura_sybase, lm_estado+" "+ lm_mensaje, "", "");
                         }
 
                     }

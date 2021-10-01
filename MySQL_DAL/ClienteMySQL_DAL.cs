@@ -105,7 +105,7 @@ namespace ProgramaIntermedioPackinMicroplus.MySQL_DAL
                 {
                     conex.Close();
                     conex.Dispose();
-                    SeleccionarDatosSybaseDAL.actualizarLogMigracionFactura(numerosFacturas.lm_factura_mysql, numerosFacturas.lm_factura_sybase, "ERROR SELEC CLI", ex.Message);
+                    SeleccionarDatosSybaseDAL.actualizarLogMigracionFactura(numerosFacturas.lm_factura_mysql, numerosFacturas.lm_factura_sybase, "ERROR SELEC CLI", ex.Message +" "+ex.StackTrace);
                    // throw ex;
                 }
                 finally
@@ -212,7 +212,7 @@ namespace ProgramaIntermedioPackinMicroplus.MySQL_DAL
                 {
                     conex.Close();
                     conex.Dispose();
-                    SeleccionarDatosSybaseDAL.actualizarLogMigracionFactura(numerosFacturas.lm_factura_mysql, numerosFacturas.lm_factura_sybase, "ERROR SELEC CLI PADRE", ex.Message);
+                    SeleccionarDatosSybaseDAL.actualizarLogMigracionFactura(numerosFacturas.lm_factura_mysql, numerosFacturas.lm_factura_sybase, "ERROR SELEC CLI PADRE", ex.Message +" "+ex.StackTrace);
 
                    // throw ex;
                 }

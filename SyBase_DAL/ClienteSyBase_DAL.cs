@@ -67,7 +67,7 @@ namespace ProgramaIntermedioPackinMicroplus.SyBase_DAL
                 {
                     connection.Close();
                     connection.Dispose();
-                    SeleccionarDatosSybaseDAL.actualizarLogMigracionFactura(numerosFacturas.lm_factura_mysql, numerosFacturas.lm_factura_sybase, "ERROR INS CLA CLI", ex.Message);
+                    SeleccionarDatosSybaseDAL.actualizarLogMigracionFactura(numerosFacturas.lm_factura_mysql, numerosFacturas.lm_factura_sybase, "ERROR INS CLA CLI", ex.Message +" "+ex.StackTrace);
 
                    // throw new Exception(ex.Message);
                 }
@@ -75,7 +75,7 @@ namespace ProgramaIntermedioPackinMicroplus.SyBase_DAL
                 {
                     connection.Close();
                     connection.Dispose();
-                    SeleccionarDatosSybaseDAL.actualizarLogMigracionFactura(numerosFacturas.lm_factura_mysql, numerosFacturas.lm_factura_sybase, "ERROR INS CLA CLI", ex.Message);
+                    SeleccionarDatosSybaseDAL.actualizarLogMigracionFactura(numerosFacturas.lm_factura_mysql, numerosFacturas.lm_factura_sybase, "ERROR INS CLA CLI", ex.Message +" "+ex.StackTrace);
 
                     // throw new Exception(ex.Message);
                 }
@@ -141,7 +141,7 @@ namespace ProgramaIntermedioPackinMicroplus.SyBase_DAL
                 {
                     connection.Close();
                     connection.Dispose();
-                    SeleccionarDatosSybaseDAL.actualizarLogMigracionFactura(numerosFacturas.lm_factura_mysql, numerosFacturas.lm_factura_sybase, "ERROR INS CLI", ex.Message);
+                    SeleccionarDatosSybaseDAL.actualizarLogMigracionFactura(numerosFacturas.lm_factura_mysql, numerosFacturas.lm_factura_sybase, "ERROR INS CLI", ex.Message +" "+ex.StackTrace);
 
                    // throw new Exception(ex.Message);
                 }
@@ -149,7 +149,7 @@ namespace ProgramaIntermedioPackinMicroplus.SyBase_DAL
                 {
                     connection.Close();
                     connection.Dispose();
-                    SeleccionarDatosSybaseDAL.actualizarLogMigracionFactura(numerosFacturas.lm_factura_mysql, numerosFacturas.lm_factura_sybase, "ERROR INS CLI", ex.Message);
+                    SeleccionarDatosSybaseDAL.actualizarLogMigracionFactura(numerosFacturas.lm_factura_mysql, numerosFacturas.lm_factura_sybase, "ERROR INS CLI", ex.Message +" "+ex.StackTrace);
 
                    // throw new Exception(ex.Message);
                 }
@@ -159,6 +159,63 @@ namespace ProgramaIntermedioPackinMicroplus.SyBase_DAL
                     connection.Dispose();
                 }
             return codCliente;
+        }
+
+
+        public static bool comparaSiEisteClienteSyBase(String codigoCliente)
+        {
+            bool resultado = false;
+            string codCliente = "";
+            // EJECUTAR C:\Microplus\sourceplus\savemicro_plus.exe
+            using (OdbcConnection connection = new OdbcConnection(SettingsConexion.Default.conexionSybase))
+                try
+                {
+                    connection.Open();
+
+                    // SLECCIONAR EMPRESA
+
+                    string codEmpresa = "";
+                    String SQL_query_empresa = "SELECT  codemp FROM EMPRESA ";
+                    OdbcCommand cmdCodEmpresa = new OdbcCommand(SQL_query_empresa, connection);
+                    codEmpresa = cmdCodEmpresa.ExecuteScalar().ToString();
+
+
+                    // verificar si existe cliente
+                    String SQL_query_verificar_cliente = "SELECT codcli FROM clientes where codemp = '" + codEmpresa + "'  and codcli = '" + codigoCliente + "' ";
+                    OdbcCommand cmdVerificarCliente = new OdbcCommand(SQL_query_verificar_cliente, connection);
+                    OdbcDataReader dr = null;
+                    dr = cmdVerificarCliente.ExecuteReader();
+                    while (dr.Read())
+                    {
+                        resultado = true;
+                    }
+
+                    connection.Close();
+                    connection.Dispose();
+
+                }
+                catch (OdbcException ex)
+                {
+                    connection.Close();
+                    connection.Dispose();
+                    SeleccionarDatosSybaseDAL.actualizarLogMigracionFactura(numerosFacturas.lm_factura_mysql, numerosFacturas.lm_factura_sybase, "ERROR COMPARAR CLI", ex.Message + " " + ex.StackTrace);
+
+                    // throw new Exception(ex.Message);
+                }
+                catch (Exception ex)
+                {
+                    connection.Close();
+                    connection.Dispose();
+                    SeleccionarDatosSybaseDAL.actualizarLogMigracionFactura(numerosFacturas.lm_factura_mysql, numerosFacturas.lm_factura_sybase, "ERROR COMPARAR CLI", ex.Message + " " + ex.StackTrace);
+
+                    // throw new Exception(ex.Message);
+                }
+                finally
+                {
+                    connection.Close();
+                    connection.Dispose();
+                }
+            return resultado;
         }
     }
 }

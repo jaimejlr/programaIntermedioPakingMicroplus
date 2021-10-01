@@ -29,21 +29,29 @@ namespace ProgramaIntermedioPackinMicroplus
 
             Console.WriteLine("inicio");
 
+
+            Console.WriteLine("Ingrese el número de Inicio del invoice");
+            int invoceInicio = Int32.Parse(Console.ReadLine());
+
+
+            Console.WriteLine("Ingrese el número fin del invoice");
+            int invoceFin = Int32.Parse(Console.ReadLine());
+
             FacturaMySQL_DAL dalFacturasMySQL = new FacturaMySQL_DAL();
 
 
             // crear tabla para guadar las facturas que se realizó la migración de mysql a sybase
 
-            Console.WriteLine("***Seleccionando el numero máximo de factura***");
-            // seleccionar el máximo id de factura del sistema guardado en la tabla log
-            String maximoFactura = SeleccionarDatosSybaseDAL.mtdoSeleccionarMaximaFacturaMYSQL();
+            //Console.WriteLine("***Seleccionando el numero máximo de factura***");
+            //// seleccionar el máximo id de factura del sistema guardado en la tabla log
+            //String maximoFactura = SeleccionarDatosSybaseDAL.mtdoSeleccionarMaximaFacturaMYSQL();
             
-            // consultar las facturas mayores al máximo id guardado en la tabla log
-            Console.WriteLine("Número de factura mysql: "+ maximoFactura);
+            //// consultar las facturas mayores al máximo id guardado en la tabla log
+            //Console.WriteLine("Número de factura mysql: "+ maximoFactura);
             //insertar el detalle de la factura.
 
 
-            List<FacturasMySqlBL> listaFacturasMySQL = dalFacturasMySQL.mtdoSeleccionarTodofacturas(Convert.ToInt32(maximoFactura));
+            List<FacturasMySqlBL> listaFacturasMySQL = dalFacturasMySQL.mtdoSeleccionarTodofacturas(Convert.ToInt32(invoceInicio), Convert.ToInt32(invoceFin));
             foreach (var item in listaFacturasMySQL)
             {
                 numerosFacturas.lm_factura_mysql = item.INVOICE;
@@ -55,11 +63,15 @@ namespace ProgramaIntermedioPackinMicroplus
                 obj.codemp = NumeroFacturaSiguienteDAL.seleccionarCodigoEmpresa();
 
                 numeroFacturaSybase = NumeroFacturaSiguienteDAL.seleccionarSiguienteFactura();
-              
 
-                
+
+
 
                 obj.numfac = "F" + numeroFacturaSybase.PadLeft(8, '0');
+                //obj.numfac = item.NUM_FACTURA;
+                //obj.claveaccesofe = item.autorizacion;
+
+
                 numerosFacturas.lm_factura_sybase = obj.numfac;
                 Console.WriteLine("..........Guardar en log");
                 SeleccionarDatosSybaseDAL.insertarLogMigracionFactura(item.INVOICE, obj.numfac, "PENDIENTE", "");
@@ -85,8 +97,20 @@ namespace ProgramaIntermedioPackinMicroplus
                 ClienteMySqlBL clientehijo = new ClienteMySqlBL();
                 clientehijo = ClienteMySQL_DAL.mtdoSeleccionarTodoclientes(item.cod_client);
                 var codClaseCliente = ClienteSyBase_DAL.insertarClaseClienteSyBase(clientehijo);
+                if(clientehijo.ALFA_CLIENT == "" || clientehijo.ALFA_CLIENT == null )
+                {
+                  obj.codcli = ClienteSyBase_DAL.insertarClienteSyBase(clientehijo, codClaseCliente, datosDae.codigoPais);
 
-                obj.codcli = ClienteSyBase_DAL.insertarClienteSyBase(clientehijo, codClaseCliente, datosDae.codigoPais);
+                }
+                else if (ClienteSyBase_DAL.comparaSiEisteClienteSyBase(clientehijo.ALFA_CLIENT))
+                {
+                    obj.codcli = clientehijo.ALFA_CLIENT;
+                }
+                else
+                {
+                    obj.codcli = ClienteSyBase_DAL.insertarClienteSyBase(clientehijo, codClaseCliente, datosDae.codigoPais);
+                }
+
                 obj.rucced = clientehijo.identificacion;
                 obj.idcliente = clientehijo.identificacion;
                 obj.idcliguia = clientehijo.identificacion;
