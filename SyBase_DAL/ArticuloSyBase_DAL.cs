@@ -29,7 +29,7 @@ namespace ProgramaIntermedioPackinMicroplus.SyBase_DAL
 
 
                     // verificar si existe articulo
-                    String SQL_query_verificar_articulo = "SELECT codart FROM articulos where codemp = '" + codEmpresa + "'  and nomart = '" + obj.nomart + "'  ";
+                    String SQL_query_verificar_articulo = "SELECT codart FROM articulos where codemp = '" + codEmpresa + "'  and codart = '" + obj.codart + "'  ";
                     OdbcCommand cmdVerificararticulo = new OdbcCommand(SQL_query_verificar_articulo, connection);
                     OdbcDataReader dr = null;
                     dr = cmdVerificararticulo.ExecuteReader();
@@ -67,7 +67,7 @@ namespace ProgramaIntermedioPackinMicroplus.SyBase_DAL
                     connection.Dispose();
                     SeleccionarDatosSybaseDAL.actualizarLogMigracionFactura(numerosFacturas.lm_factura_mysql, numerosFacturas.lm_factura_sybase, "ERROR INSR ART", ex.Message +" "+ex.StackTrace);
 
-                    //throw new Exception(ex.Message);
+                    throw new Exception(ex.Message);
                 }
                 catch (Exception ex)
                 {
@@ -75,7 +75,7 @@ namespace ProgramaIntermedioPackinMicroplus.SyBase_DAL
                     connection.Dispose();
                     SeleccionarDatosSybaseDAL.actualizarLogMigracionFactura(numerosFacturas.lm_factura_mysql, numerosFacturas.lm_factura_sybase, "ERROR INSR ART", ex.Message +" "+ex.StackTrace);
 
-                  //  throw new Exception(ex.Message);
+                    throw new Exception(ex.Message);
                 }
                 finally
                 {
@@ -84,5 +84,7 @@ namespace ProgramaIntermedioPackinMicroplus.SyBase_DAL
                 }
             return codArticulo;
         }
+
+
     }
 }

@@ -67,9 +67,12 @@ namespace ProgramaIntermedioPackinMicroplus
 
 
 
-                //obj.numfac = "F" + numeroFacturaSybase.PadLeft(8, '0');
-                obj.numfac = item.NUM_FACTURA;
-                obj.claveaccesofe = item.autorizacion;
+                obj.numfac = "F" + numeroFacturaSybase.PadLeft(8, '0');
+
+                // para migrar con facturació electrónica
+
+               // obj.numfac = item.NUM_FACTURA;
+               // obj.claveaccesofe = item.autorizacion;
 
 
                 numerosFacturas.lm_factura_sybase = obj.numfac;
@@ -258,7 +261,14 @@ namespace ProgramaIntermedioPackinMicroplus
                     objDet.codcen = codcen;
                     objDet.seriesdoc = detalle.tallos_bunche.ToString();
 
+                    objDet.codfun = funcionarioSybase_DAL.insertarfuncinario(detalle.subclien);
+
                     insertarFacturaSybase_DAL.insertarDetalleFacturaSyBase(objDet);
+
+
+
+
+
                     Console.WriteLine(" ");
                     Console.WriteLine("..........Kardex de entrada");
                     // insertar en kardex

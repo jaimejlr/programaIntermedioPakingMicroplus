@@ -182,13 +182,13 @@ namespace ProgramaIntermedioPackinMicroplus.MySQL_DAL
                 {
                     MySqlCommand cmd = null;
                     string sql = " Select v.COD_VARIE COD_PRODUCTO ,v.VNOMBRE NOMBRE_PRODUCTO, mid(v.COD_VARIE,4) as largo, f.invoice, b.tipo_caja, b.caja, fl.variedad, b.num_tallos as tallos_bunche,  " +
-                                 "(b.NUM_TALLOS) as tallos, count(b.NUM_BUNCH) As bunches2, b.precio, (b.num_tallos*b.PRECIO) as valor " +
+                                 "(b.NUM_TALLOS) as tallos, count(b.NUM_BUNCH) As bunches2, b.precio, (b.num_tallos*b.PRECIO) as valor, b.subclien " +
                                  "From bunche b " +
                                  "inner join flores fl on fl.codigo=mid(b.cod_varie,1,3) " +
                                  "Left join facturas f on f.num_pack=b.num_pack " +
                                  " LEFT JOIN variedad v on b.COD_VARIE = v.COD_VARIE "+
                                  "Where f.invoice = @INVOICE " +
-                                 "Group by b.caja,b.tipo_caja, b.cod_varie,b.num_tallos,b.precio ";
+                                 "Group by b.caja,b.tipo_caja, b.cod_varie,b.num_tallos,b.precio,  b.subclien ";
                     cmd = new MySqlCommand(sql, conex);
                     cmd.Parameters.Add("@INVOICE", MySqlDbType.VarChar).Value = numFactura;
                     MySqlDataReader dr = null;
@@ -209,6 +209,7 @@ namespace ProgramaIntermedioPackinMicroplus.MySQL_DAL
                         obj.precio = dr["precio"].ToString();
                         obj.valor = dr["valor"].ToString().Replace(",", ".");
                         obj.largo = dr["largo"].ToString().Replace(",", ".");
+                        obj.subclien = dr["subclien"].ToString().Replace(",", ".");
 
                         listaDatos.Add(obj);
                     }

@@ -20,5 +20,6 @@ namespace ProgramaIntermedioPackinMicroplus.MySQL_Negocio
         public string precio { get; set; }
         public string valor { get; set; }
         public string largo { get; set; }
+        public string subclien { get; set; }
     }
 }
