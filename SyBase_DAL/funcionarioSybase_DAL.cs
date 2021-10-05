@@ -54,6 +54,10 @@ namespace ProgramaIntermedioPackinMicroplus.SyBase_DAL
                         OdbcCommand cmd = new OdbcCommand(SQL_query, connection);
                         cmd.ExecuteNonQuery().ToString();
                     }
+                    else
+                    {
+                        codFuncionarioSeleccionado = codFuncionario;
+                    }
                     connection.Close();
                     connection.Dispose();
 

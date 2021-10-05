@@ -196,8 +196,8 @@ namespace ProgramaIntermedioPackinMicroplus
                     articuloBL.deta02 = "ROSAS";
                     articuloBL.deta03 = "ROSES";
                     articuloBL.deta04 = "ROSAEA";
-                    articuloBL.deta05 = "00600.01.01"; //CODIGO ATPA (CÓDIGO PARA ADUANA USA)
-                    articuloBL.deta06 = ""; // CODIGO REGION ANDINA(CÓDIGO PARA REGIÓN LATINOAMÉRICA)
+                    articuloBL.deta05 = "0603.11.0060"; //CODIGO ATPA (CÓDIGO PARA ADUANA USA)
+                    articuloBL.deta06 = "0603.11.00.00"; // CODIGO REGION ANDINA(CÓDIGO PARA REGIÓN LATINOAMÉRICA)
                     articuloBL.deta07 = detalle.largo; //LARGO EN CENTIMETROS DE LA FLOR
 
                     objDet.codart = ArticuloSyBase_DAL.insertarArticuloSyBase(articuloBL); // generar código del artículo.
@@ -260,7 +260,7 @@ namespace ProgramaIntermedioPackinMicroplus
 
                     objDet.codcen = codcen;
                     objDet.seriesdoc = detalle.tallos_bunche.ToString();
-
+                    objDet.codfun = "";
                     objDet.codfun = funcionarioSybase_DAL.insertarfuncinario(detalle.subclien);
 
                     insertarFacturaSybase_DAL.insertarDetalleFacturaSyBase(objDet);
